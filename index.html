@@ -6,564 +6,237 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
+<meta name="theme-color" content="#176B45">
 <title>VHTTI Digital Portal</title>
-
 <style>
-:root {
-    --green: #176B45;
-    --deep-green: #104B32;
-    --soft-green: #E7F3EA;
-    --gold: #F4C542;
-    --navy: #123B5D;
-    --soft-blue: #E8F0F8;
-    --soft-gold: #FFF5D6;
-    --white: #FFFFFF;
-    --background: #F4F8F5;
-    --text: #263746;
-    --muted: #6B7B88;
-    --border: #E1EAE3;
+:root{
+ --green:#176B45;--deep:#104B32;--blue:#245A85;--gold:#F4C542;
+ --off:#F6F5EF;--white:#fff;--text:#263746;--muted:#687987;
+ --line:#E1E8E2;--softgreen:#E7F3EA;--softblue:#E8F0F8;--softgold:#FFF5D6;
 }
-
-* { box-sizing: border-box; }
-
-body {
-    margin: 0;
-    font-family: "Segoe UI", Arial, sans-serif;
-    color: var(--text);
-    background: var(--background);
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Segoe UI",Arial,sans-serif;color:var(--text);background:var(--off)}
+header{background:linear-gradient(120deg,var(--deep),var(--green));color:#fff;border-bottom:5px solid var(--gold);padding:20px 16px}
+.brand{max-width:1280px;margin:auto;display:grid;grid-template-columns:150px minmax(0,1fr) 150px;align-items:center;gap:22px}
+.brand-logo-wrap{height:150px;display:flex;align-items:center;justify-content:center}
+.brand-logo{width:100%;height:100%;object-fit:contain;display:block}
+.brand-copy{text-align:center;min-width:0}
+.brand-copy h1{font-size:clamp(21px,3vw,32px);line-height:1.2;margin:0 0 7px;letter-spacing:.02em}
+.brand-copy .institution{font-size:clamp(12px,1.5vw,16px);font-weight:750;margin:0 0 5px}
+.brand-copy .motto{color:var(--gold);font-weight:800;letter-spacing:.04em;margin:0 0 10px;font-size:14px}
+.brand-contact{font-size:12px;line-height:1.65;color:#F0F7F1}
+.brand-contact span{display:block}
+.hero{text-align:center;padding:30px 18px 20px}
+.hero h2{margin:0 0 9px;color:var(--deep);font-size:clamp(22px,3vw,28px)}
+.hero p{max-width:760px;margin:auto;color:var(--muted);font-size:14px;line-height:1.7}
+.container{max-width:1240px;margin:auto;padding:16px 20px 48px}
+.section-heading{display:flex;align-items:center;gap:10px;margin:5px 0 17px;color:var(--deep);font-size:19px}
+.section-heading:after{content:"";height:1px;background:var(--line);flex:1}
+.portal-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.portal-card{appearance:none;width:100%;border:1px solid var(--line);border-radius:17px;background:#fff;padding:23px 18px 20px;text-align:center;display:flex;flex-direction:column;align-items:center;min-height:205px;cursor:pointer;box-shadow:0 5px 18px rgba(16,75,50,.055);transition:transform .2s,box-shadow .2s}
+.portal-card:hover,.portal-card:focus-visible{transform:translateY(-3px);box-shadow:0 10px 24px rgba(16,75,50,.12);outline:2px solid #B8D9C5;outline-offset:2px}
+.tile-icon{width:60px;height:60px;border-radius:17px;display:grid;place-items:center;font-size:29px;margin-bottom:13px}
+.tile-green{background:#DCEFE2}.tile-blue{background:#DFEBF7}.tile-gold{background:#FFF0BD}
+.portal-card h3{font-size:16px;color:var(--deep);margin:0 0 8px;line-height:1.35}
+.portal-card p{font-size:12.5px;line-height:1.55;color:var(--muted);margin:0}
+.arrow-hint{margin-top:auto;padding-top:12px;color:var(--blue);font-size:12px;font-weight:750}
+.page{display:none;background:#fff;border:1px solid var(--line);border-radius:17px;padding:24px;margin-top:22px;box-shadow:0 5px 18px rgba(16,75,50,.05)}
+.page.active{display:block}
+.page-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.page h2{color:var(--deep);margin:0;font-size:22px}
+.back-btn,.action-btn{border:0;border-radius:9px;padding:10px 15px;background:var(--green);color:#fff;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;font-size:13px}
+.back-btn:hover,.action-btn:hover{background:var(--deep)}
+.resource-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.resource{border:1px solid var(--line);border-radius:13px;padding:17px;background:#fff;display:flex;flex-direction:column;gap:9px}
+.resource h3{margin:0;color:var(--deep);font-size:16px}
+.resource p{margin:0;color:var(--muted);font-size:13px;line-height:1.55}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:auto;padding-top:5px}
+.download-btn{background:var(--gold);color:#263746}
+.pending{display:inline-block;background:var(--softgold);color:#755900;border:1px solid #F0D982;border-radius:20px;padding:8px 12px;font-size:12px;font-weight:750;align-self:flex-start}
+.info-list{line-height:1.8;color:var(--muted);font-size:14px}
+.notice{padding:14px 16px;background:#F3F7F4;border-left:4px solid var(--green);border-radius:8px;color:#42534A;line-height:1.65;font-size:13px}
+footer{background:var(--deep);color:#E7F2EA;border-top:5px solid var(--gold);padding:25px 18px;text-align:center;font-size:12px;line-height:1.8}
+footer strong{color:var(--gold)}
+/* timetable */
+.timetable-modal{display:none;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;padding:14px}
+.timetable-modal.is-open{display:flex}
+.timetable-modal-backdrop{position:absolute;inset:0;background:rgba(10,32,23,.68)}
+.timetable-dialog{position:relative;z-index:1;width:min(1050px,100%);max-height:94vh;overflow:auto;background:#fff;border-radius:16px;padding:21px;box-shadow:0 18px 60px rgba(0,0,0,.25)}
+.timetable-dialog-header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.timetable-heading{color:var(--deep);margin:0 0 5px;font-size:21px}
+.timetable-note{color:var(--muted);margin:0 0 16px;font-size:13px}
+.modal-close{border:0;background:var(--softgreen);color:var(--deep);border-radius:10px;width:38px;height:38px;font-size:25px;cursor:pointer}
+.timetable-controls{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.timetable-controls label{display:flex;flex-direction:column;gap:6px;color:var(--deep);font-weight:700;font-size:12px;min-width:160px;flex:1}
+.timetable-controls select{font:inherit;color:var(--text);background:#F8FBF9;border:1px solid #C9DCCF;border-radius:8px;padding:10px;min-height:40px;width:100%}
+.timetable-meta{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:12px;margin:0 0 10px}
+.timetable-scroll{overflow:auto;max-width:100%;border:1px solid var(--line);border-radius:10px}
+.timetable{width:100%;min-width:760px;border-collapse:collapse;font-size:11px}
+.timetable th{background:var(--deep);color:#fff;padding:9px 7px;text-align:left}
+.timetable td{border:1px solid #DDE8E0;padding:8px;vertical-align:top;min-width:110px}
+.timetable td:first-child{background:#F1F7F3;font-weight:700;min-width:90px}
+.lesson-code{display:block;font-weight:800;color:var(--deep);margin-bottom:3px}
+.lesson-name,.lesson-detail{display:block;line-height:1.45;margin-top:3px}
+.activity-cell{background:#FFF5D6;text-align:center;font-weight:700;color:#795B00}
+.free-cell{background:#F5F7F6;color:#87938C;text-align:center}
+.timetable-empty{padding:18px;color:var(--muted)}
+@media(max-width:850px){.brand{grid-template-columns:112px minmax(0,1fr) 112px;gap:12px}.brand-logo-wrap{height:125px}.portal-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){
+ header{padding:13px 10px}.brand{grid-template-columns:70px minmax(0,1fr) 70px;gap:7px}.brand-logo-wrap{height:82px}
+ .brand-copy h1{font-size:17px}.brand-copy .institution{font-size:10px;line-height:1.35}.brand-copy .motto{font-size:10px;margin-bottom:6px}
+ .brand-contact{font-size:9px;line-height:1.45}.hero{padding:24px 15px 14px}.container{padding:12px 13px 35px}
+ .portal-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.portal-card{padding:17px 10px;min-height:185px}.tile-icon{width:52px;height:52px;font-size:25px}
+ .portal-card h3{font-size:14px}.portal-card p{font-size:11px}.page{padding:17px 13px}.resource-grid{grid-template-columns:1fr}
+ .page-top{align-items:flex-start;flex-direction:column}.back-btn{align-self:flex-start}
+ .timetable-dialog{padding:14px}.timetable-controls{display:grid;grid-template-columns:1fr}.timetable-controls label{min-width:0}
 }
-
-/* INSTITUTIONAL HEADER */
-header {
-    color: var(--white);
-    background: linear-gradient(120deg, var(--deep-green), var(--green));
-    border-bottom: 5px solid var(--gold);
-    padding: 24px 20px;
-}
-
-.header-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    gap: 22px;
-}
-
-.logo-wrap {
-    width: 96px;
-    height: 96px;
-    flex: 0 0 96px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #FFFFFF;
-    border-radius: 16px;
-    padding: 7px;
-    box-shadow: 0 4px 14px rgba(0,0,0,.12);
-}
-
-.logo {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-.header-text h1 {
-    margin: 0;
-    font-size: clamp(23px, 3vw, 32px);
-    line-height: 1.25;
-    font-weight: 750;
-}
-
-.header-text .institution {
-    margin: 7px 0 0;
-    color: #EAF5ED;
-    font-size: 15px;
-}
-
-.header-text .motto {
-    margin: 8px 0 0;
-    color: var(--gold);
-    font-weight: 700;
-    font-size: 14px;
-    letter-spacing: .4px;
-}
-
-/* WELCOME */
-.hero {
-    text-align: center;
-    padding: 36px 20px 24px;
-}
-
-.hero h2 {
-    color: var(--deep-green);
-    font-size: clamp(22px, 3vw, 28px);
-    margin: 0 0 12px;
-}
-
-.hero p {
-    max-width: 720px;
-    margin: 0 auto;
-    color: var(--muted);
-    font-size: 15px;
-    line-height: 1.7;
-}
-
-/* RESOURCE GRID */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 18px 20px 48px;
-}
-
-.document-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 22px;
-    align-items: stretch;
-}
-
-.card {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 17px;
-    padding: 26px 22px 24px;
-    min-width: 0;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-shadow: 0 5px 18px rgba(16, 75, 50, .06);
-    transition: transform .22s ease, box-shadow .22s ease;
-}
-
-.card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 24px rgba(16, 75, 50, .12);
-}
-
-/* DISTINCT ICON BACKGROUNDS - NOT WHITE */
-.card-icon {
-    width: 76px;
-    height: 76px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 20px;
-    font-size: 38px;
-    margin-bottom: 17px;
-}
-
-.icon-green { background: var(--soft-green); }
-.icon-gold  { background: var(--soft-gold); }
-.icon-blue  { background: var(--soft-blue); }
-.icon-deep  { background: #DCECE3; }
-
-.card h3 {
-    min-height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 0 10px;
-    color: var(--deep-green);
-    font-size: 17px;
-    line-height: 1.4;
-}
-
-.card p {
-    min-height: 44px;
-    margin: 0 0 20px;
-    color: var(--muted);
-    font-size: 13px;
-    line-height: 1.6;
-}
-
-/* VIEW AND DOWNLOAD ACTIONS */
-.card-actions {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    width: 100%;
-    margin-top: auto;
-}
-
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    min-height: 39px;
-    padding: 10px 13px;
-    border-radius: 8px;
-    font-size: 12.5px;
-    font-weight: 700;
-    text-decoration: none;
-    border: 1px solid transparent;
-    transition: background .2s ease, transform .2s ease;
-}
-
-.btn:hover { transform: translateY(-1px); }
-
-.btn-view {
-    color: #FFFFFF;
-    background: var(--green);
-}
-.btn-view:hover { background: var(--deep-green); }
-
-.btn-download {
-    color: var(--navy);
-    background: var(--gold);
-}
-.btn-download:hover { background: #E7B82F; }
-
-.pending {
-    display: inline-block;
-    margin-top: auto;
-    padding: 10px 17px;
-    color: #795B00;
-    background: var(--soft-gold);
-    border: 1px solid #F0D982;
-    border-radius: 24px;
-    font-size: 12px;
-    font-weight: 700;
-}
-
-/* CONTACT FOOTER */
-footer {
-    color: #FFFFFF;
-    background: var(--deep-green);
-    border-top: 5px solid var(--gold);
-    padding: 30px 20px 22px;
-}
-
-.footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 28px;
-    align-items: start;
-}
-
-.footer-title {
-    color: var(--gold);
-    margin: 0 0 10px;
-    font-size: 17px;
-}
-
-.footer-address, .footer-contact {
-    color: #E7F2EA;
-    font-size: 13px;
-    line-height: 1.8;
-    margin: 0;
-}
-
-.footer-contact a {
-    color: #FFFFFF;
-    text-decoration: none;
-}
-.footer-contact a:hover { color: var(--gold); }
-
-.footer-bottom {
-    max-width: 1200px;
-    margin: 22px auto 0;
-    padding-top: 16px;
-    border-top: 1px solid rgba(255,255,255,.18);
-    text-align: center;
-    color: #DCEBE1;
-    font-size: 12px;
-    line-height: 1.7;
-}
-.footer-bottom strong { color: var(--gold); }
-
-/* COMPACT ICONS */
-.card-icon { width:56px; height:56px; border-radius:15px; font-size:28px; margin-bottom:13px; }
-.card { padding:20px 17px 18px; }
-
-/* TIMETABLE SELECTOR MODAL - keeps the timetable off the page flow */
-.timetable-modal { display:none; position:fixed; inset:0; z-index:9999; align-items:center; justify-content:center; padding:18px; }
-.timetable-modal.is-open { display:flex; }
-.timetable-modal-backdrop { position:absolute; inset:0; background:rgba(10,32,23,.62); }
-.timetable-dialog { position:relative; z-index:1; width:min(980px,100%); max-height:90vh; overflow:auto; background:#fff; border-radius:16px; border:1px solid var(--border); padding:22px; box-shadow:0 18px 60px rgba(0,0,0,.25); }
-.timetable-dialog-header { display:flex; justify-content:space-between; align-items:flex-start; gap:15px; }
-.timetable-heading { color:var(--deep-green); margin:0 0 5px; font-size:21px; }
-.timetable-note { color:var(--muted); margin:0 0 16px; font-size:13px; }
-.modal-close { border:0; background:#E7F3EA; color:var(--deep-green); border-radius:10px; width:36px; height:36px; font-size:25px; line-height:1; cursor:pointer; flex:0 0 auto; }
-.timetable-controls { display:flex; align-items:flex-end; gap:12px; flex-wrap:wrap; margin-bottom:16px; }
-.timetable-controls label { display:flex; flex-direction:column; gap:6px; color:var(--deep-green); font-weight:700; font-size:12px; min-width:150px; flex:1; }
-.timetable-controls select { font:inherit; color:var(--text); background:#F8FBF9; border:1px solid #C9DCCF; border-radius:8px; padding:10px; min-height:40px; width:100%; }
-.timetable-meta { display:flex; justify-content:space-between; gap:12px; color:var(--muted); font-size:12px; margin:0 0 10px; }
-.timetable-scroll { overflow:auto; max-width:100%; }
-.timetable { width:100%; min-width:700px; border-collapse:collapse; font-size:11px; }
-.timetable th { background:var(--deep-green); color:#fff; padding:9px 7px; text-align:left; }
-.timetable td { border:1px solid #DDE8E0; padding:7px; vertical-align:top; min-width:105px; }
-.timetable td:first-child { background:#F1F7F3; font-weight:700; min-width:90px; }
-.lesson-code { display:block; font-weight:800; color:var(--deep-green); margin-bottom:3px; }
-.lesson-name,.lesson-detail { display:block; line-height:1.45; margin-top:3px; }
-.activity-cell { background:#FFF5D6; text-align:center; font-weight:700; color:#795B00; }
-.free-cell { background:#F5F7F6; color:#87938C; text-align:center; }
-.timetable-empty { padding:18px; color:var(--muted); }
-@media(max-width:600px) {
- .timetable-modal { padding:8px; align-items:center; }
- .timetable-dialog { padding:14px; border-radius:13px; max-height:94vh; }
- .timetable-controls { display:grid; grid-template-columns:1fr; gap:10px; }
- .timetable-controls label { min-width:0; }
- .timetable-controls .btn { width:100%; }
- .timetable-heading { font-size:18px; }
- .timetable-meta { font-size:11px; }
-}
-
-/* TABLET */
-@media (max-width: 900px) {
-    .document-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .footer-content { grid-template-columns: 1fr 1fr; }
-}
-
-/* MOBILE */
-@media (max-width: 600px) {
-    .header-content {
-        flex-direction: column;
-        text-align: center;
-        gap: 14px;
-    }
-    .logo-wrap { width: 82px; height: 82px; flex-basis: 82px; }
-    .header-text .institution { font-size: 13px; }
-    .hero { padding: 28px 18px 20px; }
-    .container { padding: 14px 15px 36px; }
-    .document-grid { grid-template-columns: 1fr; gap: 17px; }
-    .card { padding: 24px 20px; }
-    .footer-content { grid-template-columns: 1fr; text-align: center; gap: 20px; }
-}
-
-/* COMPACT, COLOURFUL ICON TILES */
-.card-icon {
-    width: 56px;
-    height: 56px;
-    flex: 0 0 56px;
-    border-radius: 15px;
-    font-size: 27px;
-    margin-bottom: 13px;
-    box-shadow: inset 0 0 0 1px rgba(23,107,69,.08);
-}
-.icon-green { background: #D6EBDD; }
-.icon-gold  { background: #FCE9A8; }
-.icon-blue  { background: #D6E7F7; }
-.icon-deep  { background: #CDE4D7; }
-.card { padding: 22px 19px 21px; }
-
-/* CLASS TIMETABLE */
-.timetable-panel {
-  background:#fff; border:1px solid var(--border); border-radius:17px;
-  padding:24px; margin:0 0 25px; box-shadow:0 5px 18px rgba(16,75,50,.06);
-}
-.timetable-heading {color:var(--deep-green); margin:0 0 8px; font-size:22px;}
-.timetable-note {color:var(--muted); margin:0 0 20px; font-size:14px; line-height:1.6;}
-.timetable-controls {display:flex; gap:14px; flex-wrap:wrap; margin-bottom:20px;}
-.timetable-controls label {display:flex; flex-direction:column; gap:7px; color:var(--deep-green); font-weight:700; font-size:13px; min-width:180px; flex:1;}
-.timetable-controls select {font:inherit; color:var(--text); background:#F8FBF8; border:1px solid #C9DCCF; border-radius:9px; padding:11px 12px; width:100%;}
-.timetable-meta {display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:12px; color:var(--muted); font-size:13px;}
-.timetable-scroll {overflow-x:auto; border:1px solid var(--border); border-radius:12px;}
-.timetable {width:100%; border-collapse:collapse; min-width:820px; font-size:12px;}
-.timetable th {background:var(--deep-green); color:white; padding:12px 10px; text-align:left;}
-.timetable td {padding:10px; border:1px solid #E4ECE6; vertical-align:top; min-width:135px; line-height:1.45;}
-.timetable td:first-child {font-weight:700; color:var(--deep-green); background:#F1F7F2; min-width:105px;}
-.timetable .lesson-code {font-weight:800; color:var(--navy); font-size:13px; display:block; margin-bottom:3px;}
-.timetable .lesson-name {display:block; color:#314655; margin-bottom:5px;}
-.timetable .lesson-detail {display:block; color:#6B7B88; font-size:11px; margin-top:3px;}
-.timetable .activity-cell {background:#FFF5D6; color:#795B00; font-weight:800; text-align:center; vertical-align:middle;}
-.timetable .free-cell {color:#87949C; font-style:italic; text-align:center;}
-.timetable-empty {padding:18px; color:var(--muted);}
-@media(max-width:600px){.timetable-panel{padding:17px 13px}.timetable-heading{font-size:20px}}
-
 </style>
 </head>
-
 <body>
-
 <header>
-    <div class="header-content">
-        <div class="logo-wrap">
-            <img src="VHTTI_VETA_Logo.png" alt="VETA Logo" class="logo">
-        </div>
-        <div class="header-text">
-            <h1>VHTTI Digital Portal</h1>
-            <p class="institution">VETA Hotel and Tourism Training Institute</p>
-            <p class="motto">VHTTI — The Home of Hospitality</p>
-        </div>
-    </div>
+ <div class="brand">
+  <div class="brand-logo-wrap"><img class="brand-logo" src="Tanzania_Coat_of_Arms_Cropped.png" alt="Nembo ya Taifa la Tanzania"></div>
+  <div class="brand-copy">
+   <h1>VHTTI DIGITAL PORTAL</h1>
+   <p class="institution">VETA HOTEL AND TOURISM TRAINING INSTITUTE (VHTTI)</p>
+   <p class="motto">THE HOME OF HOSPITALITY</p>
+   <div class="brand-contact">
+    <span>Block J, Plot No. 262, Njiro, Arusha, Tanzania</span>
+    <span>P.O. Box 1434, Arusha</span>
+    <span>Email: <a href="mailto:vhtti@veta.go.tz" style="color:#fff">vhtti@veta.go.tz</a> &nbsp; | &nbsp; Telephone: To be updated</span>
+   </div>
+  </div>
+  <div class="brand-logo-wrap"><img class="brand-logo" src="VHTTI_VETA_Logo.png" alt="Nembo ya VETA"></div>
+ </div>
 </header>
 
 <section class="hero">
-    <h2>Welcome to the Digital Portal</h2>
-    <p>
-        Access important academic documents, institutional information,
-        examination resources, and student services through one
-        convenient digital platform.
-    </p>
+ <h2>Welcome to the VHTTI Digital Portal</h2>
+ <p>Access institutional information, academic resources, student services and important updates through one convenient digital platform.</p>
 </section>
 
 <main class="container">
-    <div class="document-grid">
+ <h2 class="section-heading">Explore the Portal</h2>
+ <div class="portal-grid" id="home-grid">
+  <button class="portal-card" data-page="about"><span class="tile-icon tile-green">🏛️</span><h3>About VHTTI</h3><p>Learn about the Institute, its mandate and training environment.</p><span class="arrow-hint">Open section →</span></button>
+  <button class="portal-card" data-page="announcements"><span class="tile-icon tile-gold">📢</span><h3>Announcements</h3><p>Important notices, updates and institutional announcements.</p><span class="arrow-hint">Open section →</span></button>
+  <button class="portal-card" data-page="timetable"><span class="tile-icon tile-blue">🗓️</span><h3>Class Timetable</h3><p>View class schedules by NTA level, programme and stream.</p><span class="arrow-hint">Open timetable →</span></button>
+  <button class="portal-card" data-page="results"><span class="tile-icon tile-green">🎓</span><h3>Examination Results</h3><p>Access examination results through the official channel.</p><span class="arrow-hint">Open section →</span></button>
+  <button class="portal-card" data-page="documents"><span class="tile-icon tile-blue">📁</span><h3>Institutional Documents</h3><p>Academic calendar, fees, admission information and policies.</p><span class="arrow-hint">View documents →</span></button>
+  <button class="portal-card" data-page="shortcourses"><span class="tile-icon tile-gold">📚</span><h3>Short Courses</h3><p>Explore short courses offered by VHTTI.</p><span class="arrow-hint">View courses →</span></button>
+  <button class="portal-card" data-page="services"><span class="tile-icon tile-green">🌐</span><h3>Student Online Services</h3><p>Access student support and online service links.</p><span class="arrow-hint">Open services →</span></button>
+  <button class="portal-card" data-page="evaluation"><span class="tile-icon tile-blue">📝</span><h3>Module Evaluation</h3><p>Provide feedback on module delivery and teaching.</p><span class="arrow-hint">Open evaluation →</span></button>
+  <button class="portal-card" data-page="jobs"><span class="tile-icon tile-gold">💼</span><h3>Job Opportunities</h3><p>View job opportunities and career notices.</p><span class="arrow-hint">Open section →</span></button>
+ </div>
 
-        <!-- ACADEMIC CALENDAR -->
-        <div class="card">
-            <div class="card-icon icon-green">📅</div>
-            <h3>Academic Calendar</h3>
-            <p>Academic calendar for the 2026/2027 academic year.</p>
-            <div class="card-actions">
-                <a href="Academic_Calendar_2026-2027.pdf?v=20261107" target="_blank" rel="noopener" class="btn btn-view">👁 View Document</a>
-                <a href="Academic_Calendar_2026-2027.pdf?v=20261107" download class="btn btn-download">⬇ Download</a>
-            </div>
-        </div>
+ <section class="page" id="page-about">
+  <div class="page-top"><h2>About VHTTI</h2><button class="back-btn" data-home>← Back to Home</button></div>
+  <p class="info-list">VETA Hotel and Tourism Training Institute (VHTTI) is located at Njiro, Arusha, Tanzania. The Institute provides vocational training in hospitality and tourism-related fields.</p>
+  <div class="notice">More institutional profile information will be added when the approved official profile is provided.</div>
+ </section>
 
-        <!-- GRADUATION NOTICE -->
-        <div class="card">
-            <div class="card-icon icon-gold">🎓</div>
-            <h3>Graduation Notice</h3>
-            <p>Access the official graduation notice.</p>
-            <div class="card-actions">
-                <a href="Graduation_Notice.pdf?v=20261107" target="_blank" rel="noopener" class="btn btn-view">👁 View Document</a>
-                <a href="Graduation_Notice.pdf?v=20261107" download class="btn btn-download">⬇ Download</a>
-            </div>
-        </div>
+ <section class="page" id="page-announcements">
+  <div class="page-top"><h2>Announcements</h2><button class="back-btn" data-home>← Back to Home</button></div>
+  <div class="notice">Official announcements and notices will be published in this section. New notices can be added as they become available.</div>
+ </section>
 
-        <!-- FEE STRUCTURE -->
-        <div class="card">
-            <div class="card-icon icon-blue">💰</div>
-            <h3>Fee Structure</h3>
-            <p>Tuition and other fees for the 2026/2027 academic year.</p>
-            <div class="card-actions">
-                <a href="Fee_Structure_2026-2027.pdf?v=20261107" target="_blank" rel="noopener" class="btn btn-view">👁 View Document</a>
-                <a href="Fee_Structure_2026-2027.pdf?v=20261107" download class="btn btn-download">⬇ Download</a>
-            </div>
-        </div>
+ <section class="page" id="page-results">
+  <div class="page-top"><h2>Examination Results</h2><button class="back-btn" data-home>← Back to Home</button></div>
+  <div class="notice">The examination results service is being prepared. Results should only be accessed through an authorised and secure channel to protect students’ personal information.</div>
+  <span class="pending">Service Coming Soon</span>
+ </section>
 
-        <!-- APPLICATION AND ADMISSION GUIDE -->
-        <div class="card">
-            <div class="card-icon icon-deep">📘</div>
-            <h3>Application &amp; Admission Guide</h3>
-            <p>Application procedures and admission guidelines.</p>
-            <div class="card-actions">
-                <a href="Application_Form_and_Admission_Guide_2026-2027.pdf?v=20261107" target="_blank" rel="noopener" class="btn btn-view">👁 View Document</a>
-                <a href="Application_Form_and_Admission_Guide_2026-2027.pdf?v=20261107" download class="btn btn-download">⬇ Download</a>
-            </div>
-        </div>
+ <section class="page" id="page-documents">
+  <div class="page-top"><h2>Institutional Documents</h2><button class="back-btn" data-home>← Back to Home</button></div>
+  <div class="resource-grid">
+   <article class="resource"><h3>Academic Calendar</h3><p>Academic calendar for the 2026/2027 academic year.</p><div class="actions"><a class="action-btn" target="_blank" rel="noopener" href="Academic_Calendar_2026-2027.pdf?v=20261118">View Document</a><a class="action-btn download-btn" download href="Academic_Calendar_2026-2027.pdf?v=20261118">Download</a></div></article>
+   <article class="resource"><h3>Fee Structure</h3><p>Tuition and other fees for the 2026/2027 academic year.</p><div class="actions"><a class="action-btn" target="_blank" rel="noopener" href="Fee_Structure_2026-2027.pdf?v=20261118">View Document</a><a class="action-btn download-btn" download href="Fee_Structure_2026-2027.pdf?v=20261118">Download</a></div></article>
+   <article class="resource"><h3>Admission Form and Guide</h3><p>Application procedures and admission guidelines.</p><div class="actions"><a class="action-btn" target="_blank" rel="noopener" href="Application_Form_and_Admission_Guide_2026-2027.pdf?v=20261118">View Document</a><a class="action-btn download-btn" download href="Application_Form_and_Admission_Guide_2026-2027.pdf?v=20261118">Download</a></div></article>
+   <article class="resource"><h3>Joining Instructions</h3><p>Joining instructions for admitted students.</p><span class="pending">Document Coming Soon</span></article>
+   <article class="resource"><h3>Examination Policy</h3><p>Institutional examination policies and regulations.</p><span class="pending">Document Coming Soon</span></article>
+   <article class="resource"><h3>Industrial Attachment Policy</h3><p>Guidelines governing students’ industrial attachment.</p><span class="pending">Document Coming Soon</span></article>
+   <article class="resource"><h3>VHTTI Codes of Conduct</h3><p>Institutional codes of conduct and regulations.</p><span class="pending">Document Coming Soon</span></article>
+  </div>
+ </section>
 
-        <!-- EXAMINATION TIMETABLE -->
-        <div class="card">
-            <div class="card-icon icon-gold">📋</div>
-            <h3>Examination Timetable</h3>
-            <p>Semester I examination timetable for 2026/2027.</p>
-            <div class="card-actions">
-                <a href="Examination_Timetable_Semester_I_2026-2027.pdf?v=20261107" target="_blank" rel="noopener" class="btn btn-view">👁 View Document</a>
-                <a href="Examination_Timetable_Semester_I_2026-2027.pdf?v=20261107" download class="btn btn-download">⬇ Download</a>
-            </div>
-        </div>
+ <section class="page" id="page-shortcourses">
+  <div class="page-top"><h2>Short Courses</h2><button class="back-btn" data-home>← Back to Home</button></div>
+  <div class="resource">
+   <h3>VHTTI Short Courses</h3><p>Explore the short course programmes offered by the Institute.</p>
+   <div class="actions"><a class="action-btn" target="_blank" rel="noopener" href="VHTTI_Short_Courses_Tangazo.pdf?v=20261118">View Leaflet</a><a class="action-btn download-btn" download href="VHTTI_Short_Courses_Tangazo.pdf?v=20261118">Download</a></div>
+  </div>
+ </section>
 
-        <!-- CLASS TIMETABLE -->
-        <div class="card">
-            <div class="card-icon icon-blue">🗓️</div>
-            <h3>Class Timetable</h3>
-            <p>Access class timetables by NTA Level, Programme and Stream.</p>
-            <button type="button" class="btn btn-view timetable-choose" id="timetable-choose">Choose</button>
-        </div>
+ <section class="page" id="page-services">
+  <div class="page-top"><h2>Student Online Services</h2><button class="back-btn" data-home>← Back to Home</button></div>
+  <div class="resource-grid">
+   <article class="resource"><h3>Request AVN</h3><p>Access the official online service for requesting an AVN.</p><span class="pending">Official link to be added</span></article>
+   <article class="resource"><h3>Suggestions &amp; Feedback</h3><p>Share ideas, concerns, comments and suggestions to support improvement of the Institute. Anonymous feedback may be enabled in the form.</p><span class="pending">Feedback form Coming Soon</span></article>
+  </div>
+ </section>
 
-        <!-- SHORT COURSES -->
-        <div class="card">
-            <div class="card-icon icon-green">📘</div>
-            <h3>Short Courses</h3>
-            <p>Explore short course programmes offered by VHTTI.</p>
-            <div class="card-actions">
-                <a href="VHTTI_Short_Courses_Tangazo.pdf?v=20261107" target="_blank" rel="noopener" class="btn btn-view">👁 View Leaflet</a>
-                <a href="VHTTI_Short_Courses_Tangazo.pdf?v=20261107" download class="btn btn-download">⬇ Download</a>
-            </div>
-        </div>
+ <section class="page" id="page-evaluation">
+  <div class="page-top"><h2>Module Evaluation</h2><button class="back-btn" data-home>← Back to Home</button></div>
+  <p class="info-list">Use this section to evaluate the modules taught during the semester, including module delivery and teaching.</p>
+  <div class="resource-grid">
+   <article class="resource"><h3>Semester I</h3><p>Module evaluation questionnaire for Semester I.</p><span class="pending">Evaluation form Coming Soon</span></article>
+   <article class="resource"><h3>Semester II</h3><p>Module evaluation questionnaire for Semester II.</p><span class="pending">Evaluation form Coming Soon</span></article>
+  </div>
+ </section>
 
-        <!-- EXAMINATION POLICY -->
-        <div class="card">
-            <div class="card-icon icon-deep">📖</div>
-            <h3>Examination Policy</h3>
-            <p>Institutional examination policies and regulations.</p>
-            <span class="pending">Document Coming Soon</span>
-        </div>
-
-        <!-- INDUSTRIAL ATTACHMENT -->
-        <div class="card">
-            <div class="card-icon icon-blue">🏨</div>
-            <h3>Industrial Attachment</h3>
-            <p>Industrial attachment information and guidelines.</p>
-            <span class="pending">Document Coming Soon</span>
-        </div>
-
-        <!-- CODES OF CONDUCT -->
-        <div class="card">
-            <div class="card-icon icon-gold">📜</div>
-            <h3>VHTTI Codes of Conduct</h3>
-            <p>Institutional codes of conduct and regulations.</p>
-            <span class="pending">Document Coming Soon</span>
-        </div>
-
-    </div>
-
-
-
+ <section class="page" id="page-jobs">
+  <div class="page-top"><h2>Job Opportunities</h2><button class="back-btn" data-home>← Back to Home</button></div>
+  <div class="notice">Job vacancies and career opportunities relevant to students and graduates will be posted here when verified notices are available.</div>
+  <span class="pending">No current notices published</span>
+ </section>
 </main>
 
 <!-- CLASS TIMETABLE MODAL -->
 <div class="timetable-modal" id="timetable-modal" aria-hidden="true">
-  <div class="timetable-modal-backdrop" data-close-timetable></div>
-  <section class="timetable-dialog" role="dialog" aria-modal="true" aria-labelledby="timetable-heading">
-    <div class="timetable-dialog-header">
-      <div>
-        <h2 class="timetable-heading" id="timetable-heading">Class Timetable</h2>
-        <p class="timetable-note">Semester I • 2026/2027</p>
-      </div>
-      <button type="button" class="modal-close" id="timetable-close" aria-label="Close timetable">×</button>
-    </div>
-    <div class="timetable-controls">
-      <label for="timetable-level">NTA Level
-        <select id="timetable-level"><option value="NTA Level 4">NTA Level 4</option><option value="NTA Level 5">NTA Level 5</option><option value="NTA Level 6">NTA Level 6</option></select>
-      </label>
-      <label for="timetable-programme">Programme / Stream
-        <select id="timetable-programme"></select>
-      </label>
-      <button type="button" class="btn btn-view" id="timetable-view">View Timetable</button>
-    </div>
-    <div class="timetable-meta"><strong id="timetable-selection"></strong><span>Monday – Friday</span></div>
-    <div id="timetable-display" class="timetable-scroll" aria-live="polite"></div>
-  </section>
+ <div class="timetable-modal-backdrop" data-close-timetable></div>
+ <section class="timetable-dialog" role="dialog" aria-modal="true" aria-labelledby="timetable-heading">
+  <div class="timetable-dialog-header"><div><h2 class="timetable-heading" id="timetable-heading">Class Timetable</h2><p class="timetable-note">Semester I • 2026/2027</p></div><button type="button" class="modal-close" id="timetable-close" aria-label="Close timetable">×</button></div>
+  <div class="timetable-controls">
+   <label for="timetable-level">NTA Level<select id="timetable-level"><option value="NTA Level 4">NTA Level 4</option><option value="NTA Level 5">NTA Level 5</option><option value="NTA Level 6">NTA Level 6</option></select></label>
+   <label for="timetable-programme">Programme / Stream<select id="timetable-programme"></select></label>
+   <button type="button" class="action-btn" id="timetable-view">View Timetable</button>
+  </div>
+  <div class="timetable-meta"><strong id="timetable-selection"></strong><span>Monday – Friday</span></div>
+  <div id="timetable-display" class="timetable-scroll" aria-live="polite"></div>
+ </section>
 </div>
 
 <footer>
-    <div class="footer-content">
-        <div>
-            <h3 class="footer-title">VETA Hotel and Tourism Training Institute</h3>
-            <p class="footer-address">
-                Block J, Plot No. 262, Njiro<br>
-                P.O. Box 1434<br>
-                Arusha, Tanzania
-            </p>
-        </div>
-        <div>
-            <h3 class="footer-title">Contact Us</h3>
-            <p class="footer-contact">
-                Email:
-                <a href="mailto:vhtti@veta.go.tz">vhtti@veta.go.tz</a>
-            </p>
-            <p class="footer-contact">VHTTI — The Home of Hospitality</p>
-        </div>
-    </div>
-
-    <div class="footer-bottom">
-        &copy; 2026 <strong>VHTTI Digital Portal</strong> |
-        VETA Hotel and Tourism Training Institute<br>
-        Excellence in Hotel and Tourism Training
-    </div>
+ <strong>VETA Hotel and Tourism Training Institute (VHTTI)</strong><br>
+ Block J, Plot No. 262, Njiro, P.O. Box 1434, Arusha, Tanzania<br>
+ Email: <a href="mailto:vhtti@veta.go.tz" style="color:#fff">vhtti@veta.go.tz</a><br>
+ VHTTI Digital Portal • Academic Year 2026/2027
 </footer>
 
+<script>
+function showPage(name){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.getElementById("home-grid").style.display="none";
+ const page=document.getElementById("page-"+name);
+ if(page) page.classList.add("active");
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+function showHome(){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.getElementById("home-grid").style.display="grid";
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+document.querySelectorAll("[data-page]").forEach(btn=>btn.addEventListener("click",()=>{
+ const page=btn.dataset.page;
+ if(page==="timetable"){openTimetableModal();return;}
+ showPage(page);
+}));
+document.querySelectorAll("[data-home]").forEach(btn=>btn.addEventListener("click",showHome));
+</script>
 
 <script>
+
 const classTimetableData = {"NTA Level 4": {"CA 1": [{"time": "8:00 - 9:00", "cells": [{"subject": "GST04101", "subjectName": "Applied Communication Skills", "tutor": "LINDYATI, A.", "room": "LECTURE THEATRE"}, {"subject": "CAT04107", "subjectName": "Cookery Methods", "tutor": "MSINDO, E", "room": "CLASSROOM-05"}, {"subject": "GST04105", "subjectName": "Applied Business Arithmetic", "tutor": "THOMAS, A.", "room": "LECTURE THEATRE"}, {"subject": "CAT04106", "subjectName": "Kitchen Attributes, Health, Safety and Hygiene", "tutor": "SUPERVISOR", "room": "VHTTI KITCHEN"}, {"subject": "CAT04108", "subjectName": "Introduction to Tourism and Hospitality", "tutor": "KABALI, H.", "room": "LECTURE THEATRE"}]}, {"time": "9:00 - 10:00", "cells": [{"subject": "GST04101", "subjectName": "Applied Communication Skills", "tutor": "LINDYATI, A.", "room": "LECTURE THEATRE"}, {"subject": "CAT04107", "subjectName": "Cookery Methods", "tutor": "MSINDO, E", "room": "CLASSROOM-05"}, {"subject": "GST04105", "subjectName": "Applied Business Arithmetic", "tutor": "THOMAS, A.", "room": "LECTURE THEATRE"}, {"subject": "CAT04106", "subjectName": "Kitchen Attributes, Health, Safety and Hygiene", "tutor": "SUPERVISOR", "room": "VHTTI KITCHEN"}, {"subject": "CAT04108", "subjectName": "Introduction to Tourism and Hospitality", "tutor": "KABALI, H.", "room": "LECTURE THEATRE"}]}, {"time": "10:00 - 10:30", "cells": [{"activity": "TEA BREAK"}, {"subject": null, "subjectName": "", "tutor": "FREE", "room": null}, {"subject": null, "subjectName": "", "tutor": "CAT04106", "room": "MSINDO, E"}, {"subject": null, "subjectName": "", "tutor": "GST04103", "room": "BETSAITA, S."}, {"subject": null, "subjectName": "", "tutor": "GST04104", "room": "MBWAMBO,J"}]}, {"time": "10:30 - 11:30", "cells": [{"subject": "CAT04107", "subjectName": "Cookery Methods", "tutor": "MSINDO, E", "room": "CLASSROOM-05"}, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "CAT04106", "subjectName": "Kitchen Attributes, Health, Safety and Hygiene", "tutor": "MSINDO, E", "room": "CLASSROOM-05"}, {"subject": "GST04103", "subjectName": "Waste and Environmental Safety", "tutor": "BETSAITA, S.", "room": "LECTURE THEATRE"}, {"subject": "GST04104", "subjectName": "Basic Computer Applications", "tutor": "MBWAMBO,J", "room": "COMP. LAB"}]}, {"time": "11:30 - 12:30", "cells": [{"subject": "CAT04107", "subjectName": "Cookery Methods", "tutor": "MSINDO, E", "room": "CLASSROOM-05"}, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "CAT04106", "subjectName": "Kitchen Attributes, Health, Safety and Hygiene", "tutor": "MSINDO, E", "room": "CLASSROOM-05"}, {"subject": "GST04103", "subjectName": "Waste and Environmental Safety", "tutor": "BETSAITA, S.", "room": "LECTURE THEATRE"}, {"subject": "GST04104", "subjectName": "Basic Computer Applications", "tutor": "MBWAMBO,J", "room": "COMP. LAB"}]}, {"time": "12:30 - 13:30", "cells": [{"activity": "LUNCH BREAK"}, {"subject": null, "subjectName": "", "tutor": "CAT04108", "room": "KABALI, H."}, {"subject": null, "subjectName": "", "tutor": "LIBRARY", "room": null}, {"subject": null, "subjectName": "", "tutor": "DEBATES", "room": "LINDYATI, A& MOLLEL,S"}, {"subject": null, "subjectName": "", "tutor": "RELIGION", "room": null}]}, {"time": "13:30 - 14:30", "cells": [{"subject": "LIBRARY", "subjectName": "LIBRARY", "tutor": null, "room": null}, {"subject": "CAT04108", "subjectName": "Introduction to Tourism and Hospitality", "tutor": "KABALI, H.", "room": "LECTURE THEATRE"}, {"subject": "LIBRARY", "subjectName": "LIBRARY", "tutor": null, "room": null}, {"subject": "DEBATES", "subjectName": "DEBATES", "tutor": "LINDYATI, A& MOLLEL,S", "room": "LECTURE THEATRE"}, {"subject": "RELIGION", "subjectName": "RELIGION", "tutor": null, "room": null}]}, {"time": "14:30 - 15:30", "cells": [{"subject": "LIBRARY", "subjectName": "LIBRARY", "tutor": null, "room": null}, {"subject": "CAT04108", "subjectName": "Introduction to Tourism and Hospitality", "tutor": "KABALI, H.", "room": "LECTURE THEATRE"}, {"subject": "LIBRARY", "subjectName": "LIBRARY", "tutor": null, "room": null}, {"subject": "DEBATES", "subjectName": "DEBATES", "tutor": "LINDYATI, A& MOLLEL,S", "room": "LECTURE THEATRE"}, {"subject": "RELIGION", "subjectName": "RELIGION", "tutor": null, "room": null}]}, {"time": "15:30 - 15:45", "cells": [{"activity": "EVENING BREATH BREAK"}, {"subject": null, "subjectName": "", "tutor": "GST04104", "room": "MBWAMBO,J"}, {"subject": null, "subjectName": "", "tutor": "GST04103", "room": "BETSAITA, S."}, {"subject": null, "subjectName": "", "tutor": "GST04102", "room": "MISHEK, W."}, null]}, {"time": "15:45 - 16:45", "cells": [{"subject": "CAT04106", "subjectName": "Kitchen Attributes, Health, Safety and Hygiene", "tutor": "MSINDO, E", "room": "CLASSROOM-05"}, {"subject": "GST04104", "subjectName": "Basic Computer Applications", "tutor": "MBWAMBO,J", "room": "COMP. LAB"}, {"subject": "GST04103", "subjectName": "Waste and Environmental Safety", "tutor": "BETSAITA, S.", "room": "LECTURE THEATRE"}, {"subject": "GST04102", "subjectName": "Applied French Communication Skills", "tutor": "MISHEK, W.", "room": "LECTURE THEATRE"}, null]}, {"time": "16:45 - 17:45", "cells": [{"subject": "CAT04106", "subjectName": "Kitchen Attributes, Health, Safety and Hygiene", "tutor": "MSINDO, E", "room": "CLASSROOM-05"}, {"subject": "GST04104", "subjectName": "Basic Computer Applications", "tutor": "MBWAMBO,J", "room": "COMP. LAB"}, {"subject": "GST04103", "subjectName": "Waste and Environmental Safety", "tutor": "BETSAITA, S.", "room": "LECTURE THEATRE"}, {"subject": "GST04102", "subjectName": "Applied French Communication Skills", "tutor": "MISHEK, W.", "room": "LECTURE THEATRE"}, null]}], "FBSS": [{"time": "8:00 - 9:00", "cells": [{"subject": "FBT04107", "subjectName": "Cookery Methods", "tutor": "MSINDO, E", "room": "CLASSROOM-05"}, {"subject": "GST04101", "subjectName": "Applied Communication Skills", "tutor": "LINDYATI, A.", "room": "LECTURE THEATRE"}, {"subject": "FBT04106", "subjectName": "Service Areas Health, Safety & Security", "tutor": "SUPERVISOR", "room": "VHTTI PRACT HOTEL"}, {"subject": "GST04105", "subjectName": "Applied Business Arithmetic", "tutor": "THOMAS, A.", "room": "LECTURE THEATRE"}, {"subject": "FBT04108", "subjectName": "Introduction to Tourism and Hospitality", "tutor": "KABALI, H.", "room": "LECTURE THEATRE"}]}, {"time": "9:00 - 10:00", "cells": [{"subject": "FBT04107", "subjectName": "Cookery Methods", "tutor": "MSINDO, E", "room": "CLASSROOM-05"}, {"subject": "GST04101", "subjectName": "Applied Communication Skills", "tutor": "LINDYATI, A.", "room": "LECTURE THEATRE"}, {"subject": "FBT04106", "subjectName": "Service Areas Health, Safety & Security", "tutor": "SUPERVISOR", "room": "VHTTI PRACT HOTEL"}, {"subject": "GST04105", "subjectName": "Applied Business Arithmetic", "tutor": "THOMAS, A.", "room": "LECTURE THEATRE"}, {"subject": "FBT04108", "subjectName": "Introduction to Tourism and Hospitality", "tutor": "KABALI, H.", "room": "LECTURE THEATRE"}]}, {"time": "10:00 - 10:30", "cells": [{"activity": "TEA BREAK"}, {"subject": null, "subjectName": "", "tutor": "GST04103", "room": "BETSAITA, S."}, {"subject": null, "subjectName": "", "tutor": "FBT04106", "room": "MPAMWA, B"}, {"subject": null, "subjectName": "", "tutor": "LIBRARY", "room": null}, {"subject": null, "subjectName": "", "tutor": "FBT04106", "room": "SUPERVISOR"}]}, {"time": "10:30 - 11:30", "cells": [{"subject": "FBT04106", "subjectName": "Service Areas Health, Safety & Security", "tutor": "MPAMWA, B", "room": "LECTURE THEATRE"}, {"subject": "GST04103", "subjectName": "Waste and Environmental Safety", "tutor": "BETSAITA, S.", "room": "LECTURE THEATRE"}, {"subject": "FBT04106", "subjectName": "Service Areas Health, Safety & Security", "tutor": "MPAMWA, B", "room": "LECTURE THEATRE"}, {"subject": "LIBRARY", "subjectName": "LIBRARY", "tutor": null, "room": null}, {"subject": "FBT04106", "subjectName": "Service Areas Health, Safety & Security", "tutor": "SUPERVISOR", "room": "VHTTI PRACT HOTEL"}]}, {"time": "11:30 - 12:30", "cells": [{"subject": "FBT04106", "subjectName": "Service Areas Health, Safety & Security", "tutor": "MPAMWA, B", "room": "LECTURE THEATRE"}, {"subject": "GST04103", "subjectName": "Waste and Environmental Safety", "tutor": "BETSAITA, S.", "room": "LECTURE THEATRE"}, {"subject": "FBT04106", "subjectName": "Service Areas Health, Safety & Security", "tutor": "MPAMWA, B", "room": "LECTURE THEATRE"}, {"subject": "LIBRARY", "subjectName": "LIBRARY", "tutor": null, "room": null}, {"subject": "FBT04106", "subjectName": "Service Areas Health, Safety & Security", "tutor": "SUPERVISOR", "room": "VHTTI PRACT HOTEL"}]}, {"time": "12:30 - 13:30", "cells": [{"activity": "LUNCH BREAK"}, {"subject": null, "subjectName": "", "tutor": "FBT04108", "room": "KABALI, H."}, {"subject": null, "subjectName": "", "tutor": "FBT04107", "room": "MSINDO, E"}, {"subject": null, "subjectName": "", "tutor": "DEBATES", "room": "LINDYATI, A& MOLLEL,S"}, {"subject": null, "subjectName": "", "tutor": "RELIGION", "room": null}]}, {"time": "13:30 - 14:30", "cells": [{"subject": "GST04104", "subjectName": "Basic Computer Applications", "tutor": "MBWAMBO,J", "room": "COMP. LAB"}, {"subject": "FBT04108", "subjectName": "Introduction to Tourism and Hospitality", "tutor": "KABALI, H.", "room": "LECTURE THEATRE"}, {"subject": "FBT04107", "subjectName": "Cookery Methods", "tutor": "MSINDO, E", "room": "LECTURE THEATRE"}, {"subject": "DEBATES", "subjectName": "DEBATES", "tutor": "LINDYATI, A& MOLLEL,S", "room": "LECTURE THEATRE"}, {"subject": "RELIGION", "subjectName": "RELIGION", "tutor": null, "room": null}]}, {"time": "14:30 - 15:30", "cells": [{"subject": "GST04104", "subjectName": "Basic Computer Applications", "tutor": "MBWAMBO,J", "room": "COMP. LAB"}, {"subject": "FBT04108", "subjectName": "Introduction to Tourism and Hospitality", "tutor": "KABALI, H.", "room": "LECTURE THEATRE"}, {"subject": "FBT04107", "subjectName": "Cookery Methods", "tutor": "MSINDO, E", "room": "LECTURE THEATRE"}, {"subject": "DEBATES", "subjectName": "DEBATES", "tutor": "LINDYATI, A& MOLLEL,S", "room": "LECTURE THEATRE"}, {"subject": "RELIGION", "subjectName": "RELIGION", "tutor": null, "room": null}]}, {"time": "15:30 - 15:45", "cells": [{"activity": "EVENING BREATH BREAK"}, {"subject": null, "subjectName": "", "tutor": "LIBRARY", "room": null}, {"subject": null, "subjectName": "", "tutor": "FREE", "room": null}, {"subject": null, "subjectName": "", "tutor": "FREE", "room": null}, {"subject": null, "subjectName": "", "tutor": "GST04103", "room": "BETSAITA, S."}]}, {"time": "15:45 - 16:45", "cells": [{"subject": "GST04102", "subjectName": "Applied French Communication Skills", "tutor": "MISHEK, W.", "room": "LECTURE THEATRE"}, {"subject": "LIBRARY", "subjectName": "LIBRARY", "tutor": null, "room": null}, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "GST04103", "subjectName": "Waste and Environmental Safety", "tutor": "BETSAITA, S.", "room": "LECTURE THEATRE"}]}, {"time": "16:45 - 17:45", "cells": [{"subject": "GST04102", "subjectName": "Applied French Communication Skills", "tutor": "MISHEK, W.", "room": "LECTURE THEATRE"}, {"subject": "LIBRARY", "subjectName": "LIBRARY", "tutor": null, "room": null}, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "GST04103", "subjectName": "Waste and Environmental Safety", "tutor": "BETSAITA, S.", "room": "LECTURE THEATRE"}]}], "RD": [{"time": "8:00 - 9:00", "cells": [{"subject": "RDT04107", "subjectName": "Basic Housekeeping and Public Areas Cleaning Operations", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI PRACT HOTEL"}, {"subject": "GST04101", "subjectName": "Applied Communication Skills", "tutor": "LINDYATI, A.", "room": "LECTURE THEATRE"}, {"subject": "GST04105", "subjectName": "Applied Business Arithmetic", "tutor": "THOMAS, A.", "room": "LECTURE THEATRE"}, {"subject": "RDT04108", "subjectName": "Basic Front Desk Operations", "tutor": "MWALONGO, E.", "room": "CLASSROOM-06"}, {"subject": "GST04104", "subjectName": "Basic Computer Applications", "tutor": "MBWAMBO,J", "room": "COMP. LAB"}]}, {"time": "9:00 - 10:00", "cells": [{"subject": "RDT04107", "subjectName": "Basic Housekeeping and Public Areas Cleaning Operations", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI PRACT HOTEL"}, {"subject": "GST04101", "subjectName": "Applied Communication Skills", "tutor": "LINDYATI, A.", "room": "LECTURE THEATRE"}, {"subject": "GST04105", "subjectName": "Applied Business Arithmetic", "tutor": "THOMAS, A.", "room": "LECTURE THEATRE"}, {"subject": "RDT04108", "subjectName": "Basic Front Desk Operations", "tutor": "MWALONGO, E.", "room": "CLASSROOM-06"}, {"subject": "GST04104", "subjectName": "Basic Computer Applications", "tutor": "MBWAMBO,J", "room": "COMP. LAB"}]}, {"time": "10:00 - 10:30", "cells": [{"activity": "TEA BREAK"}, {"subject": null, "subjectName": "", "tutor": "GST04103", "room": "BETSAITA, S."}, {"subject": null, "subjectName": "", "tutor": "RDT04107", "room": "MASSAM,W"}, {"subject": null, "subjectName": "", "tutor": "RDT04106", "room": "RAPHAEL, T."}, {"subject": null, "subjectName": "", "tutor": "RDT04107", "room": "SUPERVISOR/TUOR"}]}, {"time": "10:30 - 11:30", "cells": [{"subject": "LIBRARY", "subjectName": "LIBRARY", "tutor": null, "room": null}, {"subject": "GST04103", "subjectName": "Waste and Environmental Safety", "tutor": "BETSAITA, S.", "room": "LECTURE THEATRE"}, {"subject": "RDT04107", "subjectName": "Basic Housekeeping and Public Areas Cleaning Operations", "tutor": "MASSAM,W", "room": "CLASSROOM-06"}, {"subject": "RDT04106", "subjectName": "Basic Reservations in Hotel", "tutor": "RAPHAEL, T.", "room": "CLASSROOM-05"}, {"subject": "RDT04107", "subjectName": "Basic Housekeeping and Public Areas Cleaning Operations", "tutor": "SUPERVISOR/TUOR", "room": "VHTTI PRACT HOTEL"}]}, {"time": "11:30 - 12:30", "cells": [{"subject": "LIBRARY", "subjectName": "LIBRARY", "tutor": null, "room": null}, {"subject": "GST04103", "subjectName": "Waste and Environmental Safety", "tutor": "BETSAITA, S.", "room": "LECTURE THEATRE"}, {"subject": "RDT04107", "subjectName": "Basic Housekeeping and Public Areas Cleaning Operations", "tutor": "MASSAM,W", "room": "CLASSROOM-06"}, {"subject": "RDT04106", "subjectName": "Basic Reservations in Hotel", "tutor": "RAPHAEL, T.", "room": "CLASSROOM-05"}, {"subject": "RDT04107", "subjectName": "Basic Housekeeping and Public Areas Cleaning Operations", "tutor": "SUPERVISOR/TUOR", "room": "VHTTI PRACT HOTEL"}]}, {"time": "12:30 - 13:30", "cells": [{"activity": "LUNCH BREAK"}, {"subject": null, "subjectName": "", "tutor": "LIBRARY", "room": null}, {"subject": null, "subjectName": "", "tutor": "LIBRARY", "room": null}, {"subject": null, "subjectName": "", "tutor": "DEBATES", "room": "LINDYATI, A& MOLLEL,S"}, {"subject": null, "subjectName": "", "tutor": "RELIGION", "room": null}]}, {"time": "13:30 - 14:30", "cells": [{"subject": "RDT04106", "subjectName": "Basic Reservations in Hotel", "tutor": "RAPHAEL, T.", "room": "CLASSROOM-05"}, {"subject": "LIBRARY", "subjectName": "LIBRARY", "tutor": null, "room": null}, {"subject": "LIBRARY", "subjectName": "LIBRARY", "tutor": null, "room": null}, {"subject": "DEBATES", "subjectName": "DEBATES", "tutor": "LINDYATI, A& MOLLEL,S", "room": "LECTURE THEATRE"}, {"subject": "RELIGION", "subjectName": "RELIGION", "tutor": null, "room": null}]}, {"time": "14:30 - 15:30", "cells": [{"subject": "RDT04106", "subjectName": "Basic Reservations in Hotel", "tutor": "RAPHAEL, T.", "room": "CLASSROOM-05"}, {"subject": "LIBRARY", "subjectName": "LIBRARY", "tutor": null, "room": null}, {"subject": "LIBRARY", "subjectName": "LIBRARY", "tutor": null, "room": null}, {"subject": "DEBATES", "subjectName": "DEBATES", "tutor": "LINDYATI, A& MOLLEL,S", "room": "LECTURE THEATRE"}, {"subject": "RELIGION", "subjectName": "RELIGION", "tutor": null, "room": null}]}, {"time": "15:30 - 15:45", "cells": [{"activity": "EVENING BREATH BREAK"}, {"subject": null, "subjectName": "", "tutor": "GST04104", "room": "MBWAMBO,J"}, {"subject": null, "subjectName": "", "tutor": "RDT04108", "room": "MWALONGO, E."}, {"subject": null, "subjectName": "", "tutor": "GST04102", "room": "MISHEK, W."}, {"subject": null, "subjectName": "", "tutor": "GST04103", "room": "BETSAITA, S."}]}, {"time": "15:45 - 16:45", "cells": [{"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "GST04104", "subjectName": "Basic Computer Applications", "tutor": "MBWAMBO,J", "room": "COMP. LAB"}, {"subject": "RDT04108", "subjectName": "Basic Front Desk Operations", "tutor": "MWALONGO, E.", "room": "CLASSROOM-06"}, {"subject": "GST04102", "subjectName": "Applied French Communication Skills", "tutor": "MISHEK, W.", "room": "LECTURE THEATRE"}, {"subject": "GST04103", "subjectName": "Waste and Environmental Safety", "tutor": "BETSAITA, S.", "room": "LECTURE THEATRE"}]}, {"time": "16:45 - 17:45", "cells": [{"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "GST04104", "subjectName": "Basic Computer Applications", "tutor": "MBWAMBO,J", "room": "COMP. LAB"}, {"subject": "RDT04108", "subjectName": "Basic Front Desk Operations", "tutor": "MWALONGO, E.", "room": "CLASSROOM-06"}, {"subject": "GST04102", "subjectName": "Applied French Communication Skills", "tutor": "MISHEK, W.", "room": "LECTURE THEATRE"}, {"subject": "GST04103", "subjectName": "Waste and Environmental Safety", "tutor": "BETSAITA, S.", "room": "LECTURE THEATRE"}]}], "TG": [{"time": "8:00 - 9:00", "cells": [{"subject": "TGT04106", "subjectName": "Tourism Safety and Security Techniques", "tutor": "SHEILA, B", "room": "CLASSROOM-06"}, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "GST04101", "subjectName": "Applied Communication Skills", "tutor": "LINDYATI, A.", "room": "CLASSROOM-06"}, {"subject": "GST04105", "subjectName": "Applied Business Arithmetic", "tutor": "THOMAS, A.", "room": "LECTURE THEATRE"}, {"subject": "TGT04110", "subjectName": "Motor Vehicle Maintenance Techniques", "tutor": "SEMINDU, I.", "room": "CLASSROOM-06"}]}, {"time": "9:00 - 10:00", "cells": [{"subject": "TGT04106", "subjectName": "Tourism Safety and Security Techniques", "tutor": "SHEILA, B", "room": "CLASSROOM-06"}, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "GST04101", "subjectName": "Applied Communication Skills", "tutor": "LINDYATI, A.", "room": "CLASSROOM-06"}, {"subject": "GST04105", "subjectName": "Applied Business Arithmetic", "tutor": "THOMAS, A.", "room": "LECTURE THEATRE"}, {"subject": "TGT04110", "subjectName": "Motor Vehicle Maintenance Techniques", "tutor": "SEMINDU, I.", "room": "CLASSROOM-06"}]}, {"time": "10:00 - 10:30", "cells": [{"activity": "TEA BREAK"}, {"subject": null, "subjectName": "", "tutor": "TGT04109", "room": "GEORGE, F"}, {"subject": null, "subjectName": "", "tutor": "LIBRARY", "room": null}, {"subject": null, "subjectName": "", "tutor": "TGT04107", "room": null}, {"subject": null, "subjectName": "", "tutor": "TGT04106", "room": "SHEILA, B"}]}, {"time": "10:30 - 11:30", "cells": [{"subject": "TGT04110", "subjectName": "Motor Vehicle Maintenance Techniques", "tutor": "SEMINDU, I.", "room": "CLASSROOM-06"}, {"subject": "TGT04109", "subjectName": "Manage Tour Guiding Operations", "tutor": "GEORGE, F", "room": "CLASSROOM-06"}, {"subject": "LIBRARY", "subjectName": "LIBRARY", "tutor": null, "room": null}, {"subject": "TGT04107", "subjectName": "Introduction To Tourism", "tutor": null, "room": "CLASSROOM-06"}, {"subject": "TGT04106", "subjectName": "Tourism Safety and Security Techniques", "tutor": "SHEILA, B", "room": "CLASSROOM-06"}]}, {"time": "11:30 - 12:30", "cells": [{"subject": "TGT04110", "subjectName": "Motor Vehicle Maintenance Techniques", "tutor": "SEMINDU, I.", "room": "CLASSROOM-06"}, {"subject": "TGT04109", "subjectName": "Manage Tour Guiding Operations", "tutor": "GEORGE, F", "room": "CLASSROOM-06"}, {"subject": "LIBRARY", "subjectName": "LIBRARY", "tutor": null, "room": null}, {"subject": "TGT04107", "subjectName": "Introduction To Tourism", "tutor": null, "room": "CLASSROOM-06"}, {"subject": "TGT04106", "subjectName": "Tourism Safety and Security Techniques", "tutor": "SHEILA, B", "room": "CLASSROOM-06"}]}, {"time": "12:30 - 13:30", "cells": [{"activity": "LUNCH BREAK"}, {"subject": null, "subjectName": "", "tutor": "TGT04108", "room": "MSUYA, M"}, {"subject": null, "subjectName": "", "tutor": "TGT04107", "room": null}, {"subject": null, "subjectName": "", "tutor": "DEBATES", "room": "LINDYATI, A& MOLLEL,S"}, {"subject": null, "subjectName": "", "tutor": "RELIGION", "room": null}]}, {"time": "13:30 - 14:30", "cells": [{"subject": "TGT04109", "subjectName": "Manage Tour Guiding Operations", "tutor": "GEORGE, F", "room": "CLASSROOM-06"}, {"subject": "TGT04108", "subjectName": "Introductory Geography and Environmental Studies", "tutor": "MSUYA, M", "room": "CLASSROOM-06"}, {"subject": "TGT04107", "subjectName": "Introduction To Tourism", "tutor": null, "room": "CLASSROOM-06"}, {"subject": "DEBATES", "subjectName": "DEBATES", "tutor": "LINDYATI, A& MOLLEL,S", "room": "LECTURE THEATRE"}, {"subject": "RELIGION", "subjectName": "RELIGION", "tutor": null, "room": null}]}, {"time": "14:30 - 15:30", "cells": [{"subject": "TGT04110", "subjectName": "Motor Vehicle Maintenance Techniques", "tutor": "GEORGE, F", "room": "CLASSROOM-06"}, {"subject": "TGT04108", "subjectName": "Introductory Geography and Environmental Studies", "tutor": "MSUYA, M", "room": "CLASSROOM-06"}, {"subject": "TGT04107", "subjectName": "Introduction To Tourism", "tutor": null, "room": "CLASSROOM-06"}, {"subject": "DEBATES", "subjectName": "DEBATES", "tutor": "LINDYATI, A& MOLLEL,S", "room": "LECTURE THEATRE"}, {"subject": "RELIGION", "subjectName": "RELIGION", "tutor": null, "room": null}]}, {"time": "15:30 - 15:45", "cells": [{"activity": "EVENING BREATH BREAK"}, {"subject": null, "subjectName": "", "tutor": "TGT04108", "room": "MSUYA, M"}, {"subject": null, "subjectName": "", "tutor": "FREE", "room": null}, {"subject": null, "subjectName": "", "tutor": "GST04104", "room": "MBWAMBO,J"}, {"subject": null, "subjectName": "", "tutor": "FREE", "room": null}]}, {"time": "15:45 - 16:45", "cells": [{"subject": "GST04102", "subjectName": "Applied French Communication Skills", "tutor": "MISHEK, W.", "room": "LECTURE THEATRE"}, {"subject": "TGT04108", "subjectName": "Introductory Geography and Environmental Studies", "tutor": "MSUYA, M", "room": "CLASSROOM-06"}, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "GST04104", "subjectName": "Basic Computer Applications", "tutor": "MBWAMBO,J", "room": "COMP. LAB"}, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}]}, {"time": "16:45 - 17:45", "cells": [{"subject": "GST04102", "subjectName": "Applied French Communication Skills", "tutor": "MISHEK, W.", "room": "LECTURE THEATRE"}, {"subject": "TGT04108", "subjectName": "Introductory Geography and Environmental Studies", "tutor": "MSUYA, M", "room": "CLASSROOM-06"}, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "GST04104", "subjectName": "Basic Computer Applications", "tutor": "MBWAMBO,J", "room": "COMP. LAB"}, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}]}], "CA 2": [{"time": "8:00 - 9:00", "cells": [{"subject": "GST04101", "subjectName": "Applied Communication Skills", "tutor": "LINDYATI, A.", "room": "LECTURE THEATRE"}, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "GST04105", "subjectName": "Applied Business Arithmetic", "tutor": "THOMAS, A.", "room": "LECTURE THEATRE"}, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "CAT04108", "subjectName": "Introduction to Tourism and Hospitality", "tutor": "KABALI, H.", "room": "LECTURE THEATRE"}]}, {"time": "9:00 - 10:00", "cells": [{"subject": "GST04101", "subjectName": "Applied Communication Skills", "tutor": "LINDYATI, A.", "room": "LECTURE THEATRE"}, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "GST04105", "subjectName": "Applied Business Arithmetic", "tutor": "THOMAS, A.", "room": "LECTURE THEATRE"}, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "CAT04108", "subjectName": "Introduction to Tourism and Hospitality", "tutor": "KABALI, H.", "room": "LECTURE THEATRE"}]}, {"time": "10:00 - 10:30", "cells": [{"activity": "TEA BREAK"}, {"subject": null, "subjectName": "", "tutor": "CAT04106", "room": "MSINDO, E"}, {"subject": null, "subjectName": "", "tutor": "LIBRARY", "room": null}, {"subject": null, "subjectName": "", "tutor": "GST04103", "room": "BETSAITA, S."}, {"subject": null, "subjectName": "", "tutor": "GST04104", "room": "MBWAMBO,J"}]}, {"time": "10:30 - 11:30", "cells": [{"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "CAT04106", "subjectName": "Kitchen Attributes, Health, Safety and Hygiene", "tutor": "MSINDO, E", "room": "CLASSROOM-05"}, {"subject": "LIBRARY", "subjectName": "LIBRARY", "tutor": null, "room": null}, {"subject": "GST04103", "subjectName": "Waste and Environmental Safety", "tutor": "BETSAITA, S.", "room": "LECTURE THEATRE"}, {"subject": "GST04104", "subjectName": "Basic Computer Applications", "tutor": "MBWAMBO,J", "room": "COMP. LAB"}]}, {"time": "11:30 - 12:30", "cells": [{"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "CAT04106", "subjectName": "Kitchen Attributes, Health, Safety and Hygiene", "tutor": "MSINDO, E", "room": "CLASSROOM-05"}, {"subject": "LIBRARY", "subjectName": "LIBRARY", "tutor": null, "room": null}, {"subject": "GST04103", "subjectName": "Waste and Environmental Safety", "tutor": "BETSAITA, S.", "room": "LECTURE THEATRE"}, {"subject": "GST04104", "subjectName": "Basic Computer Applications", "tutor": "MBWAMBO,J", "room": "COMP. LAB"}]}, {"time": "12:30 - 13:30", "cells": [{"activity": "LUNCH BREAK"}, {"subject": null, "subjectName": "", "tutor": "CAT04108", "room": "KABALI, H."}, {"subject": null, "subjectName": "", "tutor": "CAT04107", "room": "MSINDO, E"}, {"subject": null, "subjectName": "", "tutor": "DEBATES", "room": "LINDYATI, A& MOLLEL,S"}, {"subject": null, "subjectName": "", "tutor": "RELIGION", "room": null}]}, {"time": "13:30 - 14:30", "cells": [{"subject": "CAT04106", "subjectName": "Kitchen Attributes, Health, Safety and Hygiene", "tutor": "MSINDO, E", "room": "CLASSROOM-05"}, {"subject": "CAT04108", "subjectName": "Introduction to Tourism and Hospitality", "tutor": "KABALI, H.", "room": "LECTURE THEATRE"}, {"subject": "CAT04107", "subjectName": "Cookery Methods", "tutor": "MSINDO, E", "room": "CLASSROOM-05"}, {"subject": "DEBATES", "subjectName": "DEBATES", "tutor": "LINDYATI, A& MOLLEL,S", "room": "LECTURE THEATRE"}, {"subject": "RELIGION", "subjectName": "RELIGION", "tutor": null, "room": null}]}, {"time": "14:30 - 15:30", "cells": [{"subject": "CAT04106", "subjectName": "Kitchen Attributes, Health, Safety and Hygiene", "tutor": "MSINDO, E", "room": "CLASSROOM-05"}, {"subject": "CAT04108", "subjectName": "Introduction to Tourism and Hospitality", "tutor": "KABALI, H.", "room": "LECTURE THEATRE"}, {"subject": "CAT04107", "subjectName": "Cookery Methods", "tutor": "MSINDO, E", "room": "CLASSROOM-05"}, {"subject": "DEBATES", "subjectName": "DEBATES", "tutor": "LINDYATI, A& MOLLEL,S", "room": "LECTURE THEATRE"}, {"subject": "RELIGION", "subjectName": "RELIGION", "tutor": null, "room": null}]}, {"time": "15:30 - 15:45", "cells": [{"activity": "EVENING BREATH BREAK"}, {"subject": null, "subjectName": "", "tutor": "CAT04107", "room": "MSINDO, E"}, {"subject": null, "subjectName": "", "tutor": "GST04103", "room": "BETSAITA, S."}, {"subject": null, "subjectName": "", "tutor": "GST04102", "room": "MISHEK, W."}, null]}, {"time": "15:45 - 16:45", "cells": [{"subject": "CAT04106", "subjectName": "Kitchen Attributes, Health, Safety and Hygiene", "tutor": "SUPERVISOR", "room": "VHTTI KITCHEN"}, {"subject": "CAT04107", "subjectName": "Cookery Methods", "tutor": "MSINDO, E", "room": "CLASSROOM-05"}, {"subject": "GST04103", "subjectName": "Waste and Environmental Safety", "tutor": "BETSAITA, S.", "room": "LECTURE THEATRE"}, {"subject": "GST04102", "subjectName": "Applied French Communication Skills", "tutor": "MISHEK, W.", "room": "LECTURE THEATRE"}, null]}, {"time": "16:45 - 17:45", "cells": [{"subject": "CAT04106", "subjectName": "Kitchen Attributes, Health, Safety and Hygiene", "tutor": "SUPERVISOR", "room": "VHTTI KITCHEN"}, {"subject": "CAT04107", "subjectName": "Cookery Methods", "tutor": "MSINDO, E", "room": "CLASSROOM-05"}, {"subject": "GST04103", "subjectName": "Waste and Environmental Safety", "tutor": "BETSAITA, S.", "room": "LECTURE THEATRE"}, {"subject": "GST04102", "subjectName": "Applied French Communication Skills", "tutor": "MISHEK, W.", "room": "LECTURE THEATRE"}, null]}]}, "NTA Level 5": {"CA": [{"time": "8:00 - 9:00", "cells": [{"subject": "CAT05108", "subjectName": "Hors d’oeuvre, Canapés and Sandwiches", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI HOTEL KITCHEN"}, {"subject": "GST05103", "subjectName": "Basics of Statistics and Interest", "tutor": "THOMAS, A.", "room": "CLASSROOM-05"}, {"subject": "GST05104", "subjectName": "Entrepreneurship Skills", "tutor": "BETSAITA, S.", "room": "CLASSROOM-06"}, {"subject": "GST05101", "subjectName": "Communication Skills", "tutor": "MOLLEL, S.", "room": "CLASSROOM-05"}, {"subject": "CAT05108", "subjectName": "Hors d’oeuvre, Canapés and Sandwiches", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI HOTEL KITCHEN"}]}, {"time": "9:00 - 10:00", "cells": [{"subject": "CAT05108", "subjectName": "Hors d’oeuvre, Canapés and Sandwiches", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI HOTEL KITCHEN"}, {"subject": "GST05103", "subjectName": "Basics of Statistics and Interest", "tutor": "THOMAS, A.", "room": "CLASSROOM-05"}, {"subject": "GST05104", "subjectName": "Entrepreneurship Skills", "tutor": "BETSAITA, S.", "room": "CLASSROOM-06"}, {"subject": "GST05101", "subjectName": "Communication Skills", "tutor": "MOLLEL, S.", "room": "CLASSROOM-05"}, {"subject": "CAT05108", "subjectName": "Hors d’oeuvre, Canapés and Sandwiches", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI HOTEL KITCHEN"}]}, {"time": "10:00 - 10:30", "cells": [{"activity": "TEA BREAK"}, {"subject": null, "subjectName": "", "tutor": "CAT05108", "room": "KABALI, H."}, {"subject": null, "subjectName": "", "tutor": "CAT05107", "room": "SUPERVISOR/TUTOR"}, {"subject": null, "subjectName": "", "tutor": "CAT05106", "room": "BRUNO, S."}, {"subject": null, "subjectName": "", "tutor": "GST05105", "room": "ISRAEL, Q"}]}, {"time": "10:30 - 11:30", "cells": [{"subject": "CAT05107", "subjectName": "Food Knowledge, Menu Planning and Designing", "tutor": "MWAIKUJU, R.", "room": "CLASSROOM-02"}, {"subject": "CAT05108", "subjectName": "Hors d’oeuvre, Canapés and Sandwiches", "tutor": "KABALI, H.", "room": "CLASSROOM-02"}, {"subject": "CAT05107", "subjectName": "Food Knowledge, Menu Planning and Designing", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI STUDENT KITCHEN"}, {"subject": "CAT05106", "subjectName": "Breakfast Preparation", "tutor": "BRUNO, S.", "room": "CLASSROOM-02"}, {"subject": "GST05105", "subjectName": "Applied Accounting Techniques", "tutor": "ISRAEL, Q", "room": "LECTURE THEATRE"}]}, {"time": "11:30 - 12:30", "cells": [{"subject": "CAT05107", "subjectName": "Food Knowledge, Menu Planning and Designing", "tutor": "MWAIKUJU, R.", "room": "CLASSROOM-02"}, {"subject": "CAT05108", "subjectName": "Hors d’oeuvre, Canapés and Sandwiches", "tutor": "KABALI, H.", "room": "CLASSROOM-02"}, {"subject": "CAT05107", "subjectName": "Food Knowledge, Menu Planning and Designing", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI STUDENT KITCHEN"}, {"subject": "CAT04106", "subjectName": "CAT04106", "tutor": "BRUNO, S.", "room": "CLASSROOM-02"}, {"subject": "GST05105", "subjectName": "Applied Accounting Techniques", "tutor": "ISRAEL, Q", "room": "LECTURE THEATRE"}]}, {"time": "12:30 - 13:30", "cells": [{"activity": "LUNCH BREAK"}, {"subject": null, "subjectName": "", "tutor": "CAT05106", "room": "SUPERVISOR/TUTOR"}, {"subject": null, "subjectName": "", "tutor": "CAT05107", "room": "MWAIKUJU, R."}, {"subject": null, "subjectName": "", "tutor": "CAT05108", "room": "MSINDO, E."}, {"subject": null, "subjectName": "", "tutor": "RELIGION", "room": null}]}, {"time": "13:30 - 14:30", "cells": [{"subject": "DEBATES", "subjectName": "DEBATES", "tutor": "LINDYATI, A& MOLLEL,S", "room": "LECTURE THEATRE"}, {"subject": "CAT05106", "subjectName": "Breakfast Preparation", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI HOTEL KITCHEN"}, {"subject": "CAT05107", "subjectName": "Food Knowledge, Menu Planning and Designing", "tutor": "MWAIKUJU, R.", "room": "CLASSROOM-02"}, {"subject": "CAT05108", "subjectName": "Hors d’oeuvre, Canapés and Sandwiches", "tutor": "MSINDO, E.", "room": "CLASSROOM-02"}, {"subject": "RELIGION", "subjectName": "RELIGION", "tutor": null, "room": null}]}, {"time": "14:30 - 15:30", "cells": [{"subject": "DEBATES", "subjectName": "DEBATES", "tutor": "LINDYATI, A& MOLLEL,S", "room": "LECTURE THEATRE"}, {"subject": "CAT04106", "subjectName": "CAT04106", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI HOTEL KITCHEN"}, {"subject": "CAT05107", "subjectName": "Food Knowledge, Menu Planning and Designing", "tutor": "MWAIKUJU, R.", "room": "CLASSROOM-02"}, {"subject": "CAT05108", "subjectName": "Hors d’oeuvre, Canapés and Sandwiches", "tutor": "MSINDO, E.", "room": "CLASSROOM-02"}, {"subject": "RELIGION", "subjectName": "RELIGION", "tutor": null, "room": null}]}, {"time": "15:30 - 15:45", "cells": [{"activity": "EVENING BREATH BREAK"}, {"subject": null, "subjectName": "", "tutor": "GST05102", "room": "MISHEK, W."}, {"subject": null, "subjectName": "", "tutor": "FREE", "room": null}, {"subject": null, "subjectName": "", "tutor": "CAT05107", "room": "MWAIKUJU, R."}, null]}, {"time": "15:45 - 16:45", "cells": [{"subject": "CAT04106", "subjectName": "CAT04106", "tutor": "BRUNO, S.", "room": "CLASSROOM-02"}, {"subject": "GST05102", "subjectName": "Basic French Communication Skills", "tutor": "MISHEK, W.", "room": "LECTURE THEATRE"}, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "CAT05107", "subjectName": "Food Knowledge, Menu Planning and Designing", "tutor": "MWAIKUJU, R.", "room": "CLASSROOM-03"}, null]}, {"time": "16:45 - 17:45", "cells": [{"subject": "CAT04106", "subjectName": "CAT04106", "tutor": "BRUNO, S.", "room": "CLASSROOM-02"}, {"subject": "GST05102", "subjectName": "Basic French Communication Skills", "tutor": "MISHEK, W.", "room": "LECTURE THEATRE"}, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "CAT05107", "subjectName": "Food Knowledge, Menu Planning and Designing", "tutor": "MWAIKUJU, R.", "room": "CLASSROOM-03"}, null]}], "FBSS": [{"time": "8:00 - 9:00", "cells": [{"subject": "FBT05107", "subjectName": "Food Knowledge, Menu Planning and Designing", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI-HOTEL RESTA"}, {"subject": "GST05103", "subjectName": "Basics of Statistics and Interest", "tutor": "THOMAS, A.", "room": "LECTURE THEATRE"}, {"subject": "GST05104", "subjectName": "Entrepreneurship Skills", "tutor": "BETSAITA, S.", "room": "CLASSROOM-06"}, {"subject": "GST05101", "subjectName": "Communication Skills", "tutor": "MOLLEL, S.", "room": "CLASSROOM-05"}, {"subject": "FBT05107", "subjectName": "Food Knowledge, Menu Planning and Designing", "tutor": "MWAIKUJU, R.", "room": "CLASSROOM-04"}]}, {"time": "9:00 - 10:00", "cells": [{"subject": "FBT05107", "subjectName": "Food Knowledge, Menu Planning and Designing", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI-HOTEL RESTA"}, {"subject": "GST05103", "subjectName": "Basics of Statistics and Interest", "tutor": "THOMAS, A.", "room": "LECTURE THEATRE"}, {"subject": "GST05104", "subjectName": "Entrepreneurship Skills", "tutor": "BETSAITA, S.", "room": "CLASSROOM-06"}, {"subject": "GST05101", "subjectName": "Communication Skills", "tutor": "MOLLEL, S.", "room": "CLASSROOM-05"}, {"subject": "FBT05107", "subjectName": "Food Knowledge, Menu Planning and Designing", "tutor": "MWAIKUJU, R.", "room": "CLASSROOM-04"}]}, {"time": "10:00 - 10:30", "cells": [{"activity": "TEA BREAK"}, {"subject": null, "subjectName": "", "tutor": "FBT05106", "room": "SUPERVISOR/TUTOR"}, {"subject": null, "subjectName": "", "tutor": "FBT05108", "room": "SINDEKA, B."}, {"subject": null, "subjectName": "", "tutor": "FBT05106", "room": "MPAMWA, B"}, {"subject": null, "subjectName": "", "tutor": "GST05105", "room": "ISRAEL, Q"}]}, {"time": "10:30 - 11:30", "cells": [{"subject": "FBT05106", "subjectName": "Food and Beverage Service Operations", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI-HOTEL RESTA"}, {"subject": "FBT05106", "subjectName": "Food and Beverage Service Operations", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI-HOTEL RESTA"}, {"subject": "FBT05108", "subjectName": "Beverage Knowledge and Service", "tutor": "SINDEKA, B.", "room": "CLASSROOM-04"}, {"subject": "FBT05106", "subjectName": "Food and Beverage Service Operations", "tutor": "MPAMWA, B", "room": "CLASSROOM-04"}, {"subject": "GST05105", "subjectName": "Applied Accounting Techniques", "tutor": "ISRAEL, Q", "room": "LECTURE THEATRE"}]}, {"time": "11:30 - 12:30", "cells": [{"subject": "FBT05106", "subjectName": "Food and Beverage Service Operations", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI-HOTEL RESTA"}, {"subject": "FBT05106", "subjectName": "Food and Beverage Service Operations", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI-HOTEL RESTA"}, {"subject": "FBT05108", "subjectName": "Beverage Knowledge and Service", "tutor": "SINDEKA, B.", "room": "CLASSROOM-04"}, {"subject": "FBT05106", "subjectName": "Food and Beverage Service Operations", "tutor": "MPAMWA, B", "room": "CLASSROOM-04"}, {"subject": "GST05105", "subjectName": "Applied Accounting Techniques", "tutor": "ISRAEL, Q", "room": "LECTURE THEATRE"}]}, {"time": "12:30 - 13:30", "cells": [{"activity": "LUNCH BREAK"}, {"subject": null, "subjectName": "", "tutor": "FBT05107", "room": "MWAIKUJU, R."}, {"subject": null, "subjectName": "", "tutor": "FBT05107", "room": "MWAIKUJU, R."}, {"subject": null, "subjectName": "", "tutor": "FBT05106", "room": "SUPERVISOR/TUTOR"}, {"subject": null, "subjectName": "", "tutor": "RELIGION", "room": null}]}, {"time": "13:30 - 14:30", "cells": [{"subject": "DEBATES", "subjectName": "DEBATES", "tutor": "LINDYATI, A& MOLLEL,S", "room": "LECTURE THEATRE"}, {"subject": "FBT05107", "subjectName": "Food Knowledge, Menu Planning and Designing", "tutor": "MWAIKUJU, R.", "room": "CLASSROOM-04"}, {"subject": "FBT05107", "subjectName": "Food Knowledge, Menu Planning and Designing", "tutor": "MWAIKUJU, R.", "room": "CLASSROOM-04"}, {"subject": "FBT05106", "subjectName": "Food and Beverage Service Operations", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI-HOTEL RESTA"}, {"subject": "RELIGION", "subjectName": "RELIGION", "tutor": null, "room": null}]}, {"time": "14:30 - 15:30", "cells": [{"subject": "DEBATES", "subjectName": "DEBATES", "tutor": "LINDYATI, A& MOLLEL,S", "room": "LECTURE THEATRE"}, {"subject": "FBT05107", "subjectName": "Food Knowledge, Menu Planning and Designing", "tutor": "MWAIKUJU, R.", "room": "CLASSROOM-04"}, {"subject": "FBT05107", "subjectName": "Food Knowledge, Menu Planning and Designing", "tutor": "MWAIKUJU, R.", "room": "CLASSROOM-04"}, {"subject": "FBT05106", "subjectName": "Food and Beverage Service Operations", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI-HOTEL RESTA"}, {"subject": "RELIGION", "subjectName": "RELIGION", "tutor": null, "room": null}]}, {"time": "15:30 - 15:45", "cells": [{"activity": "EVENING BREATH BREAK"}, {"subject": null, "subjectName": "", "tutor": "GST05102", "room": "MISHEK, W."}, {"subject": null, "subjectName": "", "tutor": "FREE", "room": null}, {"subject": null, "subjectName": "", "tutor": "FBT05108", "room": "SUPERVISOR/TUTOR"}, {"subject": null, "subjectName": "", "tutor": "FBT05107", "room": "MWAIKUJU, R."}]}, {"time": "15:45 - 16:45", "cells": [{"subject": "FBT05108", "subjectName": "Beverage Knowledge and Service", "tutor": "SINDEKA, B.", "room": "CLASSROOM-04"}, {"subject": "GST05102", "subjectName": "Basic French Communication Skills", "tutor": "MISHEK, W.", "room": "LECTURE THEATRE"}, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "FBT05108", "subjectName": "Beverage Knowledge and Service", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI-HOTEL RESTA"}, {"subject": "FBT05107", "subjectName": "Food Knowledge, Menu Planning and Designing", "tutor": "MWAIKUJU, R.", "room": "CLASSROOM-04"}]}, {"time": "16:45 - 17:45", "cells": [{"subject": "FBT05108", "subjectName": "Beverage Knowledge and Service", "tutor": "SINDEKA, B.", "room": "CLASSROOM-04"}, {"subject": "FBT05106", "subjectName": "Food and Beverage Service Operations", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI-HOTEL RESTA"}, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "FBT05108", "subjectName": "Beverage Knowledge and Service", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI-HOTEL RESTA"}, {"subject": "FBT05107", "subjectName": "Food Knowledge, Menu Planning and Designing", "tutor": "MWAIKUJU, R.", "room": "CLASSROOM-04"}]}], "RD": [{"time": "8:00 - 9:00", "cells": [{"subject": "RDT05106", "subjectName": "Housekeeping and Public Areas", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI PRACT HOTEL"}, {"subject": "GST05103", "subjectName": "Basics of Statistics and Interest", "tutor": "THOMAS, A.", "room": "LECTURE THEATRE"}, {"subject": "GST05104", "subjectName": "Entrepreneurship Skills", "tutor": "BETSAITA, S.", "room": "CLASSROOM-06"}, {"subject": "GST05101", "subjectName": "Communication Skills", "tutor": "MOLLEL, S.", "room": "CLASSROOM-05"}, {"subject": "RDT05106", "subjectName": "Housekeeping and Public Areas", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI PRACT HOTEL"}]}, {"time": "9:00 - 10:00", "cells": [{"subject": "RDT05106", "subjectName": "Housekeeping and Public Areas", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI PRACT HOTEL"}, {"subject": "GST05103", "subjectName": "Basics of Statistics and Interest", "tutor": "THOMAS, A.", "room": "LECTURE THEATRE"}, {"subject": "GST05104", "subjectName": "Entrepreneurship Skills", "tutor": "BETSAITA, S.", "room": "CLASSROOM-06"}, {"subject": "GST05101", "subjectName": "Communication Skills", "tutor": "MOLLEL, S.", "room": "CLASSROOM-05"}, {"subject": "RDT05106", "subjectName": "Housekeeping and Public Areas", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI PRACT HOTEL"}]}, {"time": "10:00 - 10:30", "cells": [{"activity": "TEA BREAK"}, {"subject": null, "subjectName": "", "tutor": "RDT05107", "room": "SUPERVISOR/TUTOR"}, {"subject": null, "subjectName": "", "tutor": "RDT05108", "room": "MWALONGO, E."}, {"subject": null, "subjectName": "", "tutor": "RDT05106", "room": "SUPERVISOR/TUTOR"}, {"subject": null, "subjectName": "", "tutor": "GST05105", "room": "ISRAEL, Q"}]}, {"time": "10:30 - 11:30", "cells": [{"subject": "RDT05107", "subjectName": "Reservations in Hotel", "tutor": "RAPHAEL, T.", "room": "RD CLASS"}, {"subject": "RDT05107", "subjectName": "Reservations in Hotel", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI HOTEL-RECEPTION"}, {"subject": "RDT05108", "subjectName": "Guest Relations and Concierge", "tutor": "MWALONGO, E.", "room": "RD CLASS"}, {"subject": "RDT05106", "subjectName": "Housekeeping and Public Areas", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI PRACT HOTEL"}, {"subject": "GST05105", "subjectName": "Applied Accounting Techniques", "tutor": "ISRAEL, Q", "room": "LECTURE THEATRE"}]}, {"time": "11:30 - 12:30", "cells": [{"subject": "RDT05107", "subjectName": "Reservations in Hotel", "tutor": "RAPHAEL, T.", "room": "RD CLASS"}, {"subject": "RDT05107", "subjectName": "Reservations in Hotel", "tutor": "VHTTI HOTEL-RECEPTION", "room": "VHTTI PRACT HOTEL"}, {"subject": "RDT05108", "subjectName": "Guest Relations and Concierge", "tutor": "MWALONGO, E.", "room": "RD CLASS"}, {"subject": "RDT05106", "subjectName": "Housekeeping and Public Areas", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI PRACT HOTEL"}, {"subject": "GST05105", "subjectName": "Applied Accounting Techniques", "tutor": "ISRAEL, Q", "room": "LECTURE THEATRE"}]}, {"time": "12:30 - 13:30", "cells": [{"activity": "LUNCH BREAK"}, {"subject": null, "subjectName": "", "tutor": "RDT05106", "room": "SUPERVISOR/TUTOR"}, {"subject": null, "subjectName": "", "tutor": "RDT05106", "room": "MASSAM,W"}, {"subject": null, "subjectName": "", "tutor": "RDT05107", "room": "RAPHAEL, T."}, {"subject": null, "subjectName": "", "tutor": "RELIGION", "room": null}]}, {"time": "13:30 - 14:30", "cells": [{"subject": "DEBATES", "subjectName": "DEBATES", "tutor": "LINDYATI, A& MOLLEL,S", "room": "LECTURE THEATRE"}, {"subject": "RDT05106", "subjectName": "Housekeeping and Public Areas", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI PRACT HOTEL"}, {"subject": "RDT05106", "subjectName": "Housekeeping and Public Areas", "tutor": "MASSAM,W", "room": "RD CLASS"}, {"subject": "RDT05107", "subjectName": "Reservations in Hotel", "tutor": "RAPHAEL, T.", "room": "CLASSROOM-01"}, {"subject": "RELIGION", "subjectName": "RELIGION", "tutor": null, "room": null}]}, {"time": "14:30 - 15:30", "cells": [{"subject": "DEBATES", "subjectName": "DEBATES", "tutor": "LINDYATI, A& MOLLEL,S", "room": "LECTURE THEATRE"}, {"subject": "RDT05106", "subjectName": "Housekeeping and Public Areas", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI PRACT HOTEL"}, {"subject": "RDT05106", "subjectName": "Housekeeping and Public Areas", "tutor": "MASSAM,W", "room": "RD CLASS"}, {"subject": "RDT05107", "subjectName": "Reservations in Hotel", "tutor": "RAPHAEL, T.", "room": "CLASSROOM-01"}, {"subject": "RELIGION", "subjectName": "RELIGION", "tutor": null, "room": null}]}, {"time": "15:30 - 15:45", "cells": [{"activity": "EVENING BREATH BREAK"}, {"subject": null, "subjectName": "", "tutor": "GST05102", "room": "MISHEK, W."}, {"subject": null, "subjectName": "", "tutor": "RDT05107", "room": "SUPERVISOR/TUTOR"}, null, {"subject": null, "subjectName": "", "tutor": "FREE", "room": null}]}, {"time": "15:45 - 16:45", "cells": [{"subject": "RDT05108", "subjectName": "Guest Relations and Concierge", "tutor": "MWALONGO, E.", "room": "RD CLASS"}, {"subject": "GST05102", "subjectName": "Basic French Communication Skills", "tutor": "MISHEK, W.", "room": "LECTURE THEATRE"}, {"subject": "RDT05107", "subjectName": "Reservations in Hotel", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI HOTEL-RECEPTION"}, null, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}]}, {"time": "16:45 - 17:45", "cells": [{"subject": "RDT05108", "subjectName": "Guest Relations and Concierge", "tutor": "MWALONGO, E.", "room": "RD CLASS"}, {"subject": "GST05102", "subjectName": "Basic French Communication Skills", "tutor": "MISHEK, W.", "room": "LECTURE THEATRE"}, {"subject": "RDT05107", "subjectName": "Reservations in Hotel", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI HOTEL-RECEPTION"}, null, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}]}], "TTO": [{"time": "8:00 - 9:00", "cells": [{"subject": "TTT05108", "subjectName": "Tourism Markets", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI-HOTEL RESTA"}, {"subject": "GST05103", "subjectName": "Basics of Statistics and Interest", "tutor": "THOMAS, A.", "room": "LECTURE THEATRE"}, {"subject": "GST05104", "subjectName": "Entrepreneurship Skills", "tutor": "BETSAITA, S.", "room": "CLASSROOM-06"}, {"subject": "GST05101", "subjectName": "Communication Skills", "tutor": "MOLLEL, S.", "room": "CLASSROOM-05"}, {"subject": "TTT05109", "subjectName": "Tourism in East Africa", "tutor": null, "room": "CLASSROOM-03"}]}, {"time": "9:00 - 10:00", "cells": [{"subject": "TTT05108", "subjectName": "Tourism Markets", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI-HOTEL RESTA"}, {"subject": "GST05103", "subjectName": "Basics of Statistics and Interest", "tutor": "THOMAS, A.", "room": "LECTURE THEATRE"}, {"subject": "GST05104", "subjectName": "Entrepreneurship Skills", "tutor": "BETSAITA, S.", "room": "CLASSROOM-06"}, {"subject": "GST05101", "subjectName": "Communication Skills", "tutor": "MOLLEL, S.", "room": "CLASSROOM-05"}, {"subject": "TTT05109", "subjectName": "Tourism in East Africa", "tutor": null, "room": "CLASSROOM-03"}]}, {"time": "10:00 - 10:30", "cells": [{"activity": "TEA BREAK"}, {"subject": null, "subjectName": "", "tutor": "TTT05109", "room": null}, {"subject": null, "subjectName": "", "tutor": "TTT05107", "room": null}, {"subject": null, "subjectName": "", "tutor": "TTT05108", "room": "GEORGE, F"}, {"subject": null, "subjectName": "", "tutor": "GST05105", "room": "ISRAEL, Q"}]}, {"time": "10:30 - 11:30", "cells": [{"subject": "TTT05110", "subjectName": "Applied Tourism and Environmental Laws", "tutor": "MSUYA, M", "room": "CLASSROOM-03"}, {"subject": "TTT05109", "subjectName": "Tourism in East Africa", "tutor": null, "room": "CLASSROOM-03"}, {"subject": "TTT05107", "subjectName": "Tourism Geography", "tutor": null, "room": "CLASSROOM-03"}, {"subject": "TTT05108", "subjectName": "Tourism Markets", "tutor": "GEORGE, F", "room": "CLASSROOM-03"}, {"subject": "GST05105", "subjectName": "Applied Accounting Techniques", "tutor": "ISRAEL, Q", "room": "LECTURE THEATRE"}]}, {"time": "11:30 - 12:30", "cells": [{"subject": "TTT05110", "subjectName": "Applied Tourism and Environmental Laws", "tutor": "MSUYA, M", "room": "CLASSROOM-03"}, {"subject": "TTT05109", "subjectName": "Tourism in East Africa", "tutor": null, "room": "CLASSROOM-03"}, {"subject": "TTT05107", "subjectName": "Tourism Geography", "tutor": null, "room": "CLASSROOM-03"}, {"subject": "TTT05108", "subjectName": "Tourism Markets", "tutor": "GEORGE, F", "room": "CLASSROOM-03"}, {"subject": "GST05105", "subjectName": "Applied Accounting Techniques", "tutor": "ISRAEL, Q", "room": "LECTURE THEATRE"}]}, {"time": "12:30 - 13:30", "cells": [{"activity": "LUNCH BREAK"}, {"subject": null, "subjectName": "", "tutor": "TTT05108", "room": "GEORGE, F"}, {"subject": null, "subjectName": "", "tutor": "TTT05110", "room": "MSUYA, M"}, {"subject": null, "subjectName": "", "tutor": "TTT05108", "room": "SUPERVISOR/TUTOR"}, {"subject": null, "subjectName": "", "tutor": "RELIGION", "room": null}]}, {"time": "13:30 - 14:30", "cells": [{"subject": "DEBATES", "subjectName": "DEBATES", "tutor": "LINDYATI, A& MOLLEL,S", "room": "LECTURE THEATRE"}, {"subject": "TTT05108", "subjectName": "Tourism Markets", "tutor": "GEORGE, F", "room": "CLASSROOM-03"}, {"subject": "TTT05110", "subjectName": "Applied Tourism and Environmental Laws", "tutor": "MSUYA, M", "room": "CLASSROOM-03"}, {"subject": "TTT05108", "subjectName": "Tourism Markets", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI-HOTEL RESTA"}, {"subject": "RELIGION", "subjectName": "RELIGION", "tutor": null, "room": null}]}, {"time": "14:30 - 15:30", "cells": [{"subject": "DEBATES", "subjectName": "DEBATES", "tutor": "LINDYATI, A& MOLLEL,S", "room": "LECTURE THEATRE"}, {"subject": "TTT05108", "subjectName": "Tourism Markets", "tutor": "GEORGE, F", "room": "CLASSROOM-03"}, {"subject": "TTT05110", "subjectName": "Applied Tourism and Environmental Laws", "tutor": "MSUYA, M", "room": "CLASSROOM-03"}, {"subject": "TTT05108", "subjectName": "Tourism Markets", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI-HOTEL RESTA"}, {"subject": "RELIGION", "subjectName": "RELIGION", "tutor": null, "room": null}]}, {"time": "15:30 - 15:45", "cells": [{"activity": "EVENING BREATH BREAK"}, {"subject": null, "subjectName": "", "tutor": "GST05102", "room": "MISHEK, W."}, {"subject": null, "subjectName": "", "tutor": "TTT05108", "room": "SUPERVISOR/TUTOR"}, {"subject": null, "subjectName": "", "tutor": "FREE", "room": null}, {"subject": null, "subjectName": "", "tutor": "FREE", "room": null}]}, {"time": "15:45 - 16:45", "cells": [{"subject": "TTT05109", "subjectName": "Tourism in East Africa", "tutor": null, "room": "CLASSROOM-03"}, {"subject": "GST05102", "subjectName": "Basic French Communication Skills", "tutor": "MISHEK, W.", "room": "LECTURE THEATRE"}, {"subject": "TTT05108", "subjectName": "Tourism Markets", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI-HOTEL RESTA"}, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}]}, {"time": "16:45 - 17:45", "cells": [{"subject": "TTT05109", "subjectName": "Tourism in East Africa", "tutor": null, "room": "CLASSROOM-03"}, {"subject": "GST05102", "subjectName": "Basic French Communication Skills", "tutor": "MISHEK, W.", "room": "LECTURE THEATRE"}, {"subject": "TTT05108", "subjectName": "Tourism Markets", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI-HOTEL RESTA"}, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}]}]}, "NTA Level 6": {"CA": [{"time": "8:00 - 9:00", "cells": [{"subject": "CAT06106", "subjectName": "Kitchen Planning Designing and Organisation", "tutor": "KABALI, H.", "room": "CLASSROOM-02"}, {"subject": "GST06101", "subjectName": "Manage Business Communications", "tutor": "MOLLEL,S", "room": "CLASSROOM-06"}, {"subject": "CAT06107", "subjectName": "Management of Resources and Food Control", "tutor": "BRUNO, S", "room": "CLASSROOM-02"}, {"subject": "CAT06106", "subjectName": "Kitchen Planning Designing and Organisation", "tutor": "KABALI, H.", "room": "CLASSROOM-02"}, {"subject": "GST06101", "subjectName": "Manage Business Communications", "tutor": "MOLLEL,S", "room": "CLASSROOM-05"}]}, {"time": "9:00 - 10:00", "cells": [{"subject": "CAT06106", "subjectName": "Kitchen Planning Designing and Organisation", "tutor": "KABALI, H.", "room": "CLASSROOM-02"}, {"subject": "GST06101", "subjectName": "Manage Business Communications", "tutor": "MOLLEL,S", "room": "CLASSROOM-06"}, {"subject": "CAT06107", "subjectName": "Management of Resources and Food Control", "tutor": "BRUNO, S", "room": "CLASSROOM-02"}, {"subject": "CAT06106", "subjectName": "Kitchen Planning Designing and Organisation", "tutor": "KABALI, H.", "room": "CLASSROOM-02"}, {"subject": "GST06101", "subjectName": "Manage Business Communications", "tutor": "MOLLEL,S", "room": "CLASSROOM-05"}]}, {"time": "10:00 - 10:30", "cells": [{"activity": "TEA BREAK"}, {"subject": null, "subjectName": "", "tutor": "GST06104", "room": "ISRAEL, Q"}, {"subject": null, "subjectName": "", "tutor": "GST06105", "room": "ISRAEL, Q"}, {"subject": null, "subjectName": "", "tutor": "GST06103", "room": "LINDYATI, A."}, {"subject": null, "subjectName": "", "tutor": "GST06103", "room": "LINDYATI, A."}]}, {"time": "10:30 - 11:30", "cells": [{"subject": "CAT06107", "subjectName": "Management of Resources and Food Control", "tutor": "SUPERVISOR", "room": "VHTTI KITCHEN"}, {"subject": "GST06104", "subjectName": "Business Finance Operations", "tutor": "ISRAEL, Q", "room": "CLASSROOM-05"}, {"subject": "GST06105", "subjectName": "Financial Information Management", "tutor": "ISRAEL, Q", "room": "CLASSROOM-06"}, {"subject": "GST06103", "subjectName": "Research Methods", "tutor": "LINDYATI, A.", "room": "CLASSROOM-05"}, {"subject": "GST06103", "subjectName": "Research Methods", "tutor": "LINDYATI, A.", "room": "CLASSROOM-05"}]}, {"time": "11:30 - 12:30", "cells": [{"subject": "CAT06107", "subjectName": "Management of Resources and Food Control", "tutor": "SUPERVISOR", "room": "VHTTI KITCHEN"}, {"subject": "GST06104", "subjectName": "Business Finance Operations", "tutor": "ISRAEL, Q", "room": "CLASSROOM-05"}, {"subject": "GST06105", "subjectName": "Financial Information Management", "tutor": "ISRAEL, Q", "room": "CLASSROOM-06"}, {"subject": "GST06103", "subjectName": "Research Methods", "tutor": "LINDYATI, A.", "room": "CLASSROOM-05"}, {"subject": "GST06103", "subjectName": "Research Methods", "tutor": "LINDYATI, A.", "room": "CLASSROOM-05"}]}, {"time": "12:30 - 13:30", "cells": [{"activity": "LUNCH BREAK"}, {"subject": null, "subjectName": "", "tutor": "LIBRARY", "room": null}, {"subject": null, "subjectName": "", "tutor": "DEBATES", "room": "LINDYATI, A& MOLLEL,S"}, {"subject": null, "subjectName": "", "tutor": "GST06102", "room": "MGOVANO, M"}, {"subject": null, "subjectName": "", "tutor": "RELIGION", "room": null}]}, {"time": "13:30 - 14:30", "cells": [{"subject": "CAT06106", "subjectName": "Kitchen Planning Designing and Organisation", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI KITCHEN"}, {"subject": "LIBRARY", "subjectName": "LIBRARY", "tutor": null, "room": null}, {"subject": "DEBATES", "subjectName": "DEBATES", "tutor": "LINDYATI, A& MOLLEL,S", "room": "CLASSROOM-06"}, {"subject": "GST06102", "subjectName": "Managing Human Resource", "tutor": "MGOVANO, M", "room": "CLASSROOM-05"}, {"subject": "RELIGION", "subjectName": "RELIGION", "tutor": null, "room": null}]}, {"time": "14:30 - 15:30", "cells": [{"subject": "CAT06106", "subjectName": "Kitchen Planning Designing and Organisation", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI KITCHEN"}, {"subject": "LIBRARY", "subjectName": "LIBRARY", "tutor": null, "room": null}, {"subject": "DEBATES", "subjectName": "DEBATES", "tutor": "LINDYATI, A& MOLLEL,S", "room": "CLASSROOM-06"}, {"subject": "GST06102", "subjectName": "Managing Human Resource", "tutor": "MGOVANO, M", "room": "CLASSROOM-05"}, {"subject": "RELIGION", "subjectName": "RELIGION", "tutor": null, "room": null}]}, {"time": "15:30 - 15:45", "cells": [{"activity": "EVENING BREATH BREAK"}, {"subject": null, "subjectName": "", "tutor": "GST06102", "room": "MGOVANO, M"}, null, {"subject": null, "subjectName": "", "tutor": "CAT06107", "room": "BRUNO, S"}, {"subject": null, "subjectName": "", "tutor": "FREE", "room": null}]}, {"time": "15:45 - 16:45", "cells": [{"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "GST06102", "subjectName": "Managing Human Resource", "tutor": "MGOVANO, M", "room": "CLASSROOM-05"}, null, {"subject": "CAT06107", "subjectName": "Management of Resources and Food Control", "tutor": "BRUNO, S", "room": "CLASSROOM-02"}, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}]}, {"time": "16:45 - 17:45", "cells": [{"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "GST06102", "subjectName": "Managing Human Resource", "tutor": "MGOVANO, M", "room": "CLASSROOM-05"}, null, {"subject": "CAT06107", "subjectName": "Management of Resources and Food Control", "tutor": "BRUNO, S", "room": "CLASSROOM-02"}, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}]}], "FBSS": [{"time": "8:00 - 9:00", "cells": [{"subject": "FBT06107", "subjectName": "Supervision of Food and Beverage Service Human Resources", "tutor": "SANGA, A", "room": "CLASSROOM-04"}, {"subject": "GST06101", "subjectName": "Manage Business Communications", "tutor": "MOLLEL,S", "room": "CLASSROOM-06"}, {"subject": "FBT06106", "subjectName": "Supervision of Food and Beverage Operations", "tutor": "BETSAITA, S.", "room": "CLASSROOM-02"}, {"subject": "FBT06108", "subjectName": "Food and Beverage Control", "tutor": "SINDEKA, B.", "room": "CLASSROOM-04"}, {"subject": "FBT06107", "subjectName": "Supervision of Food and Beverage Service Human Resources", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI-HOTEL RESTA"}]}, {"time": "9:00 - 10:00", "cells": [{"subject": "FBT06107", "subjectName": "Supervision of Food and Beverage Service Human Resources", "tutor": "SANGA, A", "room": "CLASSROOM-04"}, {"subject": "GST06101", "subjectName": "Manage Business Communications", "tutor": "MOLLEL,S", "room": "CLASSROOM-06"}, {"subject": "FBT06106", "subjectName": "Supervision of Food and Beverage Operations", "tutor": "BETSAITA, S.", "room": "CLASSROOM-02"}, {"subject": "FBT06108", "subjectName": "Food and Beverage Control", "tutor": "SINDEKA, B.", "room": "CLASSROOM-04"}, {"subject": "FBT06107", "subjectName": "Supervision of Food and Beverage Service Human Resources", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI-HOTEL RESTA"}]}, {"time": "10:00 - 10:30", "cells": [{"activity": "TEA BREAK"}, {"subject": null, "subjectName": "", "tutor": "GST06104", "room": "ISRAEL, Q"}, {"subject": null, "subjectName": "", "tutor": "GST06105", "room": "ISRAEL, Q"}, {"subject": null, "subjectName": "", "tutor": "GST06103", "room": "LINDYATI, A."}, {"subject": null, "subjectName": "", "tutor": "GST06103", "room": "LINDYATI, A."}]}, {"time": "10:30 - 11:30", "cells": [{"subject": "FBT06106", "subjectName": "Supervision of Food and Beverage Operations", "tutor": "BETSAITA, S.", "room": "CLASSROOM-02"}, {"subject": "GST06104", "subjectName": "Business Finance Operations", "tutor": "ISRAEL, Q", "room": "CLASSROOM-05"}, {"subject": "GST06105", "subjectName": "Financial Information Management", "tutor": "ISRAEL, Q", "room": "CLASSROOM-06"}, {"subject": "GST06103", "subjectName": "Research Methods", "tutor": "LINDYATI, A.", "room": "CLASSROOM-05"}, {"subject": "GST06103", "subjectName": "Research Methods", "tutor": "LINDYATI, A.", "room": "CLASSROOM-05"}]}, {"time": "11:30 - 12:30", "cells": [{"subject": "FBT06106", "subjectName": "Supervision of Food and Beverage Operations", "tutor": "BETSAITA, S.", "room": "CLASSROOM-02"}, {"subject": "GST06104", "subjectName": "Business Finance Operations", "tutor": "ISRAEL, Q", "room": "CLASSROOM-05"}, {"subject": "GST06105", "subjectName": "Financial Information Management", "tutor": "ISRAEL, Q", "room": "CLASSROOM-06"}, {"subject": "GST06103", "subjectName": "Research Methods", "tutor": "LINDYATI, A.", "room": "CLASSROOM-05"}, {"subject": "GST06103", "subjectName": "Research Methods", "tutor": "LINDYATI, A.", "room": "CLASSROOM-05"}]}, {"time": "12:30 - 13:30", "cells": [{"activity": "LUNCH BREAK"}, {"subject": null, "subjectName": "", "tutor": "FBT06107", "room": "SANGA, A"}, {"subject": null, "subjectName": "", "tutor": "DEBATES", "room": "LINDYATI, A& MOLLEL,S"}, {"subject": null, "subjectName": "", "tutor": "GST06102", "room": "MGOVANO, M"}, {"subject": null, "subjectName": "", "tutor": "RELIGION", "room": null}]}, {"time": "13:30 - 14:30", "cells": [{"subject": "FBT06108", "subjectName": "Food and Beverage Control", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI-HOTEL RESTA"}, {"subject": "FBT06107", "subjectName": "Supervision of Food and Beverage Service Human Resources", "tutor": "SANGA, A", "room": "CLASSROOM-04"}, {"subject": "DEBATES", "subjectName": "DEBATES", "tutor": "LINDYATI, A& MOLLEL,S", "room": "CLASSROOM-06"}, {"subject": "GST06102", "subjectName": "Managing Human Resource", "tutor": "MGOVANO, M", "room": "CLASSROOM-05"}, {"subject": "RELIGION", "subjectName": "RELIGION", "tutor": null, "room": null}]}, {"time": "14:30 - 15:30", "cells": [{"subject": "FBT06108", "subjectName": "Food and Beverage Control", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI-HOTEL RESTA"}, {"subject": "FBT06107", "subjectName": "Supervision of Food and Beverage Service Human Resources", "tutor": "SANGA, A", "room": "CLASSROOM-04"}, {"subject": "DEBATES", "subjectName": "DEBATES", "tutor": "LINDYATI, A& MOLLEL,S", "room": "CLASSROOM-06"}, {"subject": "GST06102", "subjectName": "Managing Human Resource", "tutor": "MGOVANO, M", "room": "CLASSROOM-05"}, {"subject": "RELIGION", "subjectName": "RELIGION", "tutor": null, "room": null}]}, {"time": "15:30 - 15:45", "cells": [{"activity": "EVENING BREATH BREAK"}, {"subject": null, "subjectName": "", "tutor": "GST06102", "room": "MGOVANO, M"}, null, {"subject": null, "subjectName": "", "tutor": "GST06103", "room": "GEORGE, F"}, null]}, {"time": "15:45 - 16:45", "cells": [{"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "GST06102", "subjectName": "Managing Human Resource", "tutor": "MGOVANO, M", "room": "CLASSROOM-05"}, null, {"subject": "GST06103", "subjectName": "Research Methods", "tutor": "GEORGE, F", "room": "CLASSROOM-03"}, null]}, {"time": "16:45 - 17:45", "cells": [{"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "GST06102", "subjectName": "Managing Human Resource", "tutor": "MGOVANO, M", "room": "CLASSROOM-05"}, null, {"subject": "GST06103", "subjectName": "Research Methods", "tutor": "GEORGE, F", "room": "CLASSROOM-03"}, null]}], "TTO": [{"time": "8:00 - 9:00", "cells": [{"subject": "TTT06105", "subjectName": "Tourism Marketing", "tutor": "GEORGE, F", "room": "CLASSROOM-03"}, {"subject": "GST06101", "subjectName": "Manage Business Communications", "tutor": "MOLLEL,S", "room": "CLASSROOM-06"}, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "TTT06104", "subjectName": "Manage Food and Beverage Services", "tutor": "BETSAITA, S.", "room": "CLASSROOM-03"}, {"subject": "TTT06106", "subjectName": "Manage Campsites Facilities and Services", "tutor": "MSUYA, M", "room": "CLASSROOM-03"}]}, {"time": "9:00 - 10:00", "cells": [{"subject": "TTT06105", "subjectName": "Tourism Marketing", "tutor": "GEORGE, F", "room": "CLASSROOM-03"}, {"subject": "GST06101", "subjectName": "Manage Business Communications", "tutor": "MOLLEL,S", "room": "CLASSROOM-06"}, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "TTT06104", "subjectName": "Manage Food and Beverage Services", "tutor": "BETSAITA, S.", "room": "CLASSROOM-03"}, {"subject": "TTT06106", "subjectName": "Manage Campsites Facilities and Services", "tutor": "MSUYA, M", "room": "CLASSROOM-03"}]}, {"time": "10:00 - 10:30", "cells": [{"activity": "TEA BREAK"}, {"subject": null, "subjectName": "", "tutor": "TTT06104", "room": "BETSAITA, S."}, {"subject": null, "subjectName": "", "tutor": "TTT06105", "room": "GEORGE, F"}, {"subject": null, "subjectName": "", "tutor": "GST06103", "room": "LINDYATI, A."}, {"subject": null, "subjectName": "", "tutor": "GST06103", "room": "LINDYATI, A."}]}, {"time": "10:30 - 11:30", "cells": [{"subject": "TTT06104", "subjectName": "Manage Food and Beverage Services", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI-HOTEL RESTA"}, {"subject": "TTT06104", "subjectName": "Manage Food and Beverage Services", "tutor": "BETSAITA, S.", "room": "CLASSROOM-03"}, {"subject": "TTT06105", "subjectName": "Tourism Marketing", "tutor": "GEORGE, F", "room": "CLASSROOM-03"}, {"subject": "GST06103", "subjectName": "Research Methods", "tutor": "LINDYATI, A.", "room": "CLASSROOM-05"}, {"subject": "GST06103", "subjectName": "Research Methods", "tutor": "LINDYATI, A.", "room": "CLASSROOM-05"}]}, {"time": "11:30 - 12:30", "cells": [{"subject": "TTT06104", "subjectName": "Manage Food and Beverage Services", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI-HOTEL RESTA"}, {"subject": "TTT06104", "subjectName": "Manage Food and Beverage Services", "tutor": "BETSAITA, S.", "room": "CLASSROOM-03"}, {"subject": "TTT06105", "subjectName": "Tourism Marketing", "tutor": "GEORGE, F", "room": "CLASSROOM-03"}, {"subject": "GST06103", "subjectName": "Research Methods", "tutor": "LINDYATI, A.", "room": "CLASSROOM-05"}, {"subject": "GST06103", "subjectName": "Research Methods", "tutor": "LINDYATI, A.", "room": "CLASSROOM-05"}]}, {"time": "12:30 - 13:30", "cells": [{"activity": "LUNCH BREAK"}, {"subject": null, "subjectName": "", "tutor": "LIBRARY", "room": null}, {"subject": null, "subjectName": "", "tutor": "DEBATES", "room": "LINDYATI, A& MOLLEL,S"}, {"subject": null, "subjectName": "", "tutor": "GST06102", "room": "MGOVANO, M"}, {"subject": null, "subjectName": "", "tutor": "RELIGION", "room": null}]}, {"time": "13:30 - 14:30", "cells": [{"subject": "TTT06106", "subjectName": "Manage Campsites Facilities and Services", "tutor": "MSUYA, M", "room": "CLASSROOM-03"}, {"subject": "LIBRARY", "subjectName": "LIBRARY", "tutor": null, "room": null}, {"subject": "DEBATES", "subjectName": "DEBATES", "tutor": "LINDYATI, A& MOLLEL,S", "room": "CLASSROOM-06"}, {"subject": "GST06102", "subjectName": "Managing Human Resource", "tutor": "MGOVANO, M", "room": "CLASSROOM-05"}, {"subject": "RELIGION", "subjectName": "RELIGION", "tutor": null, "room": null}]}, {"time": "14:30 - 15:30", "cells": [{"subject": "TTT06106", "subjectName": "Manage Campsites Facilities and Services", "tutor": "MSUYA, M", "room": "CLASSROOM-03"}, {"subject": "LIBRARY", "subjectName": "LIBRARY", "tutor": null, "room": null}, {"subject": "DEBATES", "subjectName": "DEBATES", "tutor": "LINDYATI, A& MOLLEL,S", "room": "CLASSROOM-06"}, {"subject": "GST06102", "subjectName": "Managing Human Resource", "tutor": "MGOVANO, M", "room": "CLASSROOM-05"}, {"subject": "RELIGION", "subjectName": "RELIGION", "tutor": null, "room": null}]}, {"time": "15:30 - 15:45", "cells": [{"activity": "EVENING BREATH BREAK"}, {"subject": null, "subjectName": "", "tutor": "GST06102", "room": "MGOVANO, M"}, {"subject": null, "subjectName": "", "tutor": "TTT06104", "room": "SUPERVISOR/TUTOR"}, {"subject": null, "subjectName": "", "tutor": "GST06103", "room": "GEORGE, F"}, {"subject": null, "subjectName": "", "tutor": "TTT06104", "room": "SUPERVISOR/TUTOR"}]}, {"time": "15:45 - 16:45", "cells": [{"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "GST06102", "subjectName": "Managing Human Resource", "tutor": "MGOVANO, M", "room": "CLASSROOM-05"}, {"subject": "TTT06104", "subjectName": "Manage Food and Beverage Services", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI-HOTEL RESTA"}, {"subject": "GST06103", "subjectName": "Research Methods", "tutor": "GEORGE, F", "room": "CLASSROOM-03"}, {"subject": "TTT06104", "subjectName": "Manage Food and Beverage Services", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI-HOTEL RESTA"}]}, {"time": "16:45 - 17:45", "cells": [{"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "GST06102", "subjectName": "Managing Human Resource", "tutor": "MGOVANO, M", "room": "CLASSROOM-05"}, {"subject": "TTT06104", "subjectName": "Manage Food and Beverage Services", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI-HOTEL RESTA"}, {"subject": "GST06103", "subjectName": "Research Methods", "tutor": "GEORGE, F", "room": "CLASSROOM-03"}, {"subject": "TTT06104", "subjectName": "Manage Food and Beverage Services", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI-HOTEL RESTA"}]}], "RD": [{"time": "8:00 - 9:00", "cells": [{"subject": "RDT06106", "subjectName": "Hospitality Ethics and Legal Aspects", "tutor": "MWALONGO, E", "room": "CLASSROOM-RD"}, {"subject": "GST06101", "subjectName": "Manage Business Communications", "tutor": "MOLLEL,S", "room": "CLASSROOM-06"}, {"subject": "RDT06107", "subjectName": "Gardening and Landscaping Techniques", "tutor": "CLASSROOM-RD", "room": "MASSAM,W"}, {"subject": "RDT06107", "subjectName": "Gardening and Landscaping Techniques", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI PRACT HOTEL"}, {"subject": "GST06101", "subjectName": "Manage Business Communications", "tutor": "MOLLEL,S", "room": "CLASSROOM-05"}]}, {"time": "9:00 - 10:00", "cells": [{"subject": "RDT06106", "subjectName": "Hospitality Ethics and Legal Aspects", "tutor": "MWALONGO, E", "room": "CLASSROOM-RD"}, {"subject": "GST06101", "subjectName": "Manage Business Communications", "tutor": "MOLLEL,S", "room": "CLASSROOM-06"}, {"subject": "RDT06107", "subjectName": "Gardening and Landscaping Techniques", "tutor": "CLASSROOM-RD", "room": "MASSAM,W"}, {"subject": "RDT06107", "subjectName": "Gardening and Landscaping Techniques", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI PRACT HOTEL"}, {"subject": "GST06101", "subjectName": "Manage Business Communications", "tutor": "MOLLEL,S", "room": "CLASSROOM-05"}]}, {"time": "10:00 - 10:30", "cells": [{"activity": "TEA BREAK"}, {"subject": null, "subjectName": "", "tutor": "GST06104", "room": "ISRAEL, Q"}, {"subject": null, "subjectName": "", "tutor": "GST06105", "room": "ISRAEL, Q"}, {"subject": null, "subjectName": "", "tutor": "GST06103", "room": "LINDYATI, A."}, {"subject": null, "subjectName": "", "tutor": "GST06103", "room": "LINDYATI, A."}]}, {"time": "10:30 - 11:30", "cells": [{"subject": "RDT06106", "subjectName": "Hospitality Ethics and Legal Aspects", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI PRACT HOTEL"}, {"subject": "GST06104", "subjectName": "Business Finance Operations", "tutor": "ISRAEL, Q", "room": "CLASSROOM-05"}, {"subject": "GST06105", "subjectName": "Financial Information Management", "tutor": "ISRAEL, Q", "room": "CLASSROOM-06"}, {"subject": "GST06103", "subjectName": "Research Methods", "tutor": "LINDYATI, A.", "room": "CLASSROOM-05"}, {"subject": "GST06103", "subjectName": "Research Methods", "tutor": "LINDYATI, A.", "room": "CLASSROOM-05"}]}, {"time": "11:30 - 12:30", "cells": [{"subject": "RDT06106", "subjectName": "Hospitality Ethics and Legal Aspects", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI PRACT HOTEL"}, {"subject": "GST06104", "subjectName": "Business Finance Operations", "tutor": "ISRAEL, Q", "room": "CLASSROOM-05"}, {"subject": "GST06105", "subjectName": "Financial Information Management", "tutor": "ISRAEL, Q", "room": "CLASSROOM-06"}, {"subject": "GST06103", "subjectName": "Research Methods", "tutor": "LINDYATI, A.", "room": "CLASSROOM-05"}, {"subject": "GST06103", "subjectName": "Research Methods", "tutor": "LINDYATI, A.", "room": "CLASSROOM-05"}]}, {"time": "12:30 - 13:30", "cells": [{"activity": "LUNCH BREAK"}, {"subject": null, "subjectName": "", "tutor": "LIBRARY", "room": null}, {"subject": null, "subjectName": "", "tutor": "DEBATES", "room": "LINDYATI, A& MOLLEL,S"}, {"subject": null, "subjectName": "", "tutor": "GST06102", "room": "MGOVANO, M"}, {"subject": null, "subjectName": "", "tutor": "RELIGION", "room": null}]}, {"time": "13:30 - 14:30", "cells": [{"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "LIBRARY", "subjectName": "LIBRARY", "tutor": null, "room": null}, {"subject": "DEBATES", "subjectName": "DEBATES", "tutor": "LINDYATI, A& MOLLEL,S", "room": "CLASSROOM-06"}, {"subject": "GST06102", "subjectName": "Managing Human Resource", "tutor": "MGOVANO, M", "room": "CLASSROOM-05"}, {"subject": "RELIGION", "subjectName": "RELIGION", "tutor": null, "room": null}]}, {"time": "14:30 - 15:30", "cells": [{"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "LIBRARY", "subjectName": "LIBRARY", "tutor": null, "room": null}, {"subject": "DEBATES", "subjectName": "DEBATES", "tutor": "LINDYATI, A& MOLLEL,S", "room": "CLASSROOM-06"}, {"subject": "GST06102", "subjectName": "Managing Human Resource", "tutor": "MGOVANO, M", "room": "CLASSROOM-05"}, {"subject": "RELIGION", "subjectName": "RELIGION", "tutor": null, "room": null}]}, {"time": "15:30 - 15:45", "cells": [{"activity": "EVENING BREATH BREAK"}, {"subject": null, "subjectName": "", "tutor": "GST06102", "room": "MGOVANO, M"}, {"subject": null, "subjectName": "", "tutor": "FREE", "room": null}, {"subject": null, "subjectName": "", "tutor": "RDT06107", "room": "SUPERVISOR/TUTOR"}, {"subject": null, "subjectName": "", "tutor": "FREE", "room": null}]}, {"time": "16:00 - 17:00", "cells": [{"subject": "RDT06106", "subjectName": "Hospitality Ethics and Legal Aspects", "tutor": "MWALONGO, E", "room": "CLASSROOM-RD"}, {"subject": "GST06102", "subjectName": "Managing Human Resource", "tutor": "MGOVANO, M", "room": "CLASSROOM-05"}, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "RDT06107", "subjectName": "Gardening and Landscaping Techniques", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI PRACT HOTEL"}, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}]}, {"time": "17:00 - 18:00", "cells": [{"subject": "RDT06106", "subjectName": "Hospitality Ethics and Legal Aspects", "tutor": "MWALONGO, E", "room": "CLASSROOM-RD"}, {"subject": "GST06102", "subjectName": "Managing Human Resource", "tutor": "MGOVANO, M", "room": "CLASSROOM-05"}, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}, {"subject": "RDT06107", "subjectName": "Gardening and Landscaping Techniques", "tutor": "SUPERVISOR/TUTOR", "room": "VHTTI PRACT HOTEL"}, {"subject": "FREE", "subjectName": "FREE", "tutor": null, "room": null}]}]}};
 const weekdays = ["Monday","Tuesday","Wednesday","Thursday","Friday"];
 const levelSelect = document.getElementById("timetable-level");
@@ -634,7 +307,7 @@ timetableView.addEventListener("click", () => {
 document.addEventListener("keydown", event => { if(event.key === "Escape") closeTimetableModal(); });
 updateProgrammes();
 display.innerHTML = '<p class="timetable-empty">Choose a programme, then select View Timetable.</p>';
-</script>
 
+</script>
 </body>
 </html>
