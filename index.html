@@ -246,31 +246,41 @@ const selection = document.getElementById("timetable-selection");
 
 function updateProgrammes() {
   const level = levelSelect.value;
-  programmeSelect.innerHTML = "";
-  Object.keys(classTimetableData[level] || {}).forEach(programme => {
+  const programmes = Object.keys(classTimetableData[level] || {});
+  programmeSelect.replaceChildren();
+  programmes.forEach(programme => {
     const option = document.createElement("option");
-    option.value = programme; option.textContent = programme;
+    option.value = programme;
+    option.textContent = programme;
     programmeSelect.appendChild(option);
   });
+  selection.textContent = "";
   display.innerHTML = '<p class="timetable-empty">Choose a programme, then select View Timetable.</p>';
 }
 function renderTimetable() {
-  const level = levelSelect.value, programme = programmeSelect.value;
-  const schedule = (classTimetableData[level] || {})[programme] || [];
+  const level = levelSelect.value;
+  const programme = programmeSelect.value;
+  const schedule = ((classTimetableData[level] || {})[programme]) || [];
   selection.textContent = level + " • " + programme;
-  if (!schedule.length) { display.innerHTML = '<p class="timetable-empty">No timetable entries available.</p>'; return; }
-  let table = '<table class="timetable"><thead><tr><th>Time</th>' + weekdays.map(day=>'<th>'+day+'</th>').join('') + '</tr></thead><tbody>';
+  if (!Array.isArray(schedule) || schedule.length === 0) {
+    display.innerHTML = '<p class="timetable-empty">No timetable entries are available for this selection.</p>';
+    return;
+  }
+  let table = '<table class="timetable"><thead><tr><th>Time</th>' + weekdays.map(day => '<th>' + day + '</th>').join('') + '</tr></thead><tbody>';
   schedule.forEach(slot => {
-    table += '<tr><td>'+escapeTimetableText(slot.time)+'</td>';
-    slot.cells.forEach(cell => {
+    table += '<tr><td>' + escapeTimetableText(slot && slot.time ? slot.time : '') + '</td>';
+    const cells = Array.isArray(slot && slot.cells) ? slot.cells : [];
+    weekdays.forEach((day, index) => {
+      const cell = cells[index];
       if (!cell) { table += '<td class="free-cell">—</td>'; return; }
-      if (cell.activity) { table += '<td class="activity-cell">'+escapeTimetableText(cell.activity)+'</td>'; return; }
+      if (cell.activity) { table += '<td class="activity-cell">' + escapeTimetableText(cell.activity) + '</td>'; return; }
       const subject = cell.subject || '';
       if (subject === 'FREE') { table += '<td class="free-cell">FREE</td>'; return; }
-      table += '<td><span class="lesson-code">'+escapeTimetableText(subject)+'</span>';
-      if (cell.subjectName && cell.subjectName !== subject) table += '<span class="lesson-name">'+escapeTimetableText(cell.subjectName)+'</span>';
-      if (cell.tutor) table += '<span class="lesson-detail"><b>Tutor:</b> '+escapeTimetableText(cell.tutor)+'</span>';
-      if (cell.room) table += '<span class="lesson-detail"><b>Venue:</b> '+escapeTimetableText(cell.room)+'</span>';
+      table += '<td>';
+      if (subject) table += '<span class="lesson-code">' + escapeTimetableText(subject) + '</span>';
+      if (cell.subjectName && cell.subjectName !== subject) table += '<span class="lesson-name">' + escapeTimetableText(cell.subjectName) + '</span>';
+      if (cell.tutor) table += '<span class="lesson-detail"><b>Tutor:</b> ' + escapeTimetableText(cell.tutor) + '</span>';
+      if (cell.room) table += '<span class="lesson-detail"><b>Venue:</b> ' + escapeTimetableText(cell.room) + '</span>';
       table += '</td>';
     });
     table += '</tr>';
@@ -281,32 +291,37 @@ function renderTimetable() {
 function escapeTimetableText(value) {
   return String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 }
-levelSelect.addEventListener("change", updateProgrammes);
-programmeSelect.addEventListener("change", () => { display.innerHTML = '<p class="timetable-empty">Select View Timetable to load the schedule.</p>'; });
 const timetableModal = document.getElementById("timetable-modal");
-const timetableChoose = document.getElementById("timetable-choose");
-const timetableView = document.getElementById("timetable-view");
 function openTimetableModal() {
-  timetableModal.classList.add("is-open");
-  timetableModal.setAttribute("aria-hidden","false");
-  document.body.style.overflow = "hidden";
   updateProgrammes();
+  timetableModal.classList.add("is-open");
+  timetableModal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
 }
 function closeTimetableModal() {
   timetableModal.classList.remove("is-open");
-  timetableModal.setAttribute("aria-hidden","true");
+  timetableModal.setAttribute("aria-hidden", "true");
   document.body.style.overflow = "";
 }
-timetableChoose.addEventListener("click", openTimetableModal);
-document.getElementById("timetable-close").addEventListener("click", closeTimetableModal);
-timetableModal.querySelector("[data-close-timetable]").addEventListener("click", closeTimetableModal);
-timetableView.addEventListener("click", () => {
-  renderTimetable();
-  display.scrollIntoView({behavior:"smooth",block:"nearest"});
+levelSelect.addEventListener("change", updateProgrammes);
+programmeSelect.addEventListener("change", () => {
+  display.innerHTML = '<p class="timetable-empty">Select View Timetable to load the schedule.</p>';
+  selection.textContent = "";
 });
-document.addEventListener("keydown", event => { if(event.key === "Escape") closeTimetableModal(); });
+timetableView.addEventListener("click", event => {
+  event.preventDefault();
+  renderTimetable();
+});
+document.getElementById("timetable-close").addEventListener("click", event => {
+  event.preventDefault();
+  event.stopPropagation();
+  closeTimetableModal();
+});
+timetableModal.querySelector("[data-close-timetable]").addEventListener("click", closeTimetableModal);
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape" && timetableModal.classList.contains("is-open")) closeTimetableModal();
+});
 updateProgrammes();
-display.innerHTML = '<p class="timetable-empty">Choose a programme, then select View Timetable.</p>';
 
 </script>
 </body>
