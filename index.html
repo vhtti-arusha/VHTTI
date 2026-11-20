@@ -91,6 +91,26 @@ footer strong{color:var(--gold)}
  .page-top{align-items:flex-start;flex-direction:column}.back-btn{align-self:flex-start}
  .timetable-dialog{padding:14px}.timetable-controls{display:grid;grid-template-columns:1fr}.timetable-controls label{min-width:0}
 }
+
+/* Campus photo banner and institutional gallery */
+.campus-banner{max-width:1240px;margin:0 auto 0;padding:0 20px}
+.campus-banner-inner{height:clamp(210px,32vw,380px);border-radius:22px;overflow:hidden;position:relative;background:#123d2b;box-shadow:0 10px 30px rgba(16,75,50,.12)}
+.campus-banner-inner img{width:100%;height:100%;object-fit:cover;object-position:center 54%;display:block}
+.campus-banner-inner:after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(9,43,28,.52),rgba(9,43,28,.05) 80%)}
+.campus-banner-caption{position:absolute;z-index:2;left:clamp(18px,4vw,45px);bottom:clamp(16px,4vw,35px);color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.35);max-width:620px}
+.campus-banner-caption h2{font-size:clamp(23px,3.5vw,38px);margin:0 0 8px;line-height:1.15}
+.campus-banner-caption p{margin:0;font-size:clamp(13px,1.6vw,16px);line-height:1.55}
+.photo-gallery{margin-top:26px}
+.photo-gallery h3{color:var(--deep);margin:0 0 7px;font-size:19px}
+.photo-gallery .gallery-intro{color:var(--muted);font-size:13px;line-height:1.6;margin:0 0 16px}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.gallery-card{overflow:hidden;border-radius:14px;border:1px solid var(--line);background:white;box-shadow:0 4px 14px rgba(16,75,50,.05)}
+.gallery-card img{width:100%;height:210px;object-fit:cover;display:block;transition:transform .3s ease}
+.gallery-card:hover img{transform:scale(1.025)}
+.gallery-card figcaption{padding:10px 12px;font-weight:700;font-size:12px;color:var(--deep)}
+@media(max-width:760px){.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.gallery-card img{height:160px}.campus-banner{padding:0 13px}}
+@media(max-width:470px){.gallery-grid{grid-template-columns:1fr}.gallery-card img{height:205px}}
+
 </style>
 </head>
 <body>
@@ -111,8 +131,12 @@ footer strong{color:var(--gold)}
  </div>
 </header>
 
+<section class="campus-banner" aria-label="VHTTI campus">
+ <div class="campus-banner-inner"><img src="assets/campus-hero.png" alt="VHTTI campus surrounded by landscaped gardens"><div class="campus-banner-caption"><h2>Welcome to VHTTI</h2><p>Learning, practical skills and professional excellence in hospitality and tourism.</p></div></div>
+</section>
+
 <section class="hero">
- <h2>Welcome to the VHTTI Digital Portal</h2>
+ <h2>VHTTI Digital Portal</h2>
  <p>Access institutional information, academic resources, student services and important updates through one convenient digital platform.</p>
 </section>
 
@@ -134,6 +158,19 @@ footer strong{color:var(--gold)}
   <div class="page-top"><h2>About VHTTI</h2><button class="back-btn" data-home>← Back to Home</button></div>
   <p class="info-list">VETA Hotel and Tourism Training Institute (VHTTI) is located at Njiro, Arusha, Tanzania. The Institute provides vocational training in hospitality and tourism-related fields.</p>
   <div class="notice">More institutional profile information will be added when the approved official profile is provided.</div>
+  <div class="photo-gallery">
+   <h3>Campus & Training Gallery</h3><p class="gallery-intro">A glimpse of the learning environment, practical training and facilities at VHTTI.</p>
+   <div class="gallery-grid">
+    <figure class="gallery-card"><img src="assets/campus-main-building.jpg" alt="VHTTI campus building and landscaped grounds" loading="lazy"><figcaption>Campus & Grounds</figcaption></figure>
+    <figure class="gallery-card"><img src="assets/culinary-practical-1.jpg" alt="Culinary student carrying prepared dishes" loading="lazy"><figcaption>Culinary Practical Training</figcaption></figure>
+    <figure class="gallery-card"><img src="assets/culinary-practical-2.jpg" alt="Culinary student plating meals" loading="lazy"><figcaption>Food Preparation & Plating</figcaption></figure>
+    <figure class="gallery-card"><img src="assets/classroom-learning-1.jpg" alt="Students learning in a classroom" loading="lazy"><figcaption>Classroom Learning</figcaption></figure>
+    <figure class="gallery-card"><img src="assets/classroom-learning-2.jpg" alt="Instructor facilitating classroom training" loading="lazy"><figcaption>Facilitated Learning</figcaption></figure>
+    <figure class="gallery-card"><img src="assets/culinary-team.jpg" alt="Culinary trainees working together" loading="lazy"><figcaption>Team Practical Training</figcaption></figure>
+    <figure class="gallery-card"><img src="assets/campus-building-2.jpg" alt="Another view of the institute building" loading="lazy"><figcaption>Institute Facilities</figcaption></figure>
+    <figure class="gallery-card"><img src="assets/campus-garden.jpg" alt="VHTTI landscaped garden and outdoor space" loading="lazy"><figcaption>Campus Environment</figcaption></figure>
+   </div>
+  </div>
  </section>
 
  <section class="page" id="page-announcements">
@@ -246,41 +283,31 @@ const selection = document.getElementById("timetable-selection");
 
 function updateProgrammes() {
   const level = levelSelect.value;
-  const programmes = Object.keys(classTimetableData[level] || {});
-  programmeSelect.replaceChildren();
-  programmes.forEach(programme => {
+  programmeSelect.innerHTML = "";
+  Object.keys(classTimetableData[level] || {}).forEach(programme => {
     const option = document.createElement("option");
-    option.value = programme;
-    option.textContent = programme;
+    option.value = programme; option.textContent = programme;
     programmeSelect.appendChild(option);
   });
-  selection.textContent = "";
   display.innerHTML = '<p class="timetable-empty">Choose a programme, then select View Timetable.</p>';
 }
 function renderTimetable() {
-  const level = levelSelect.value;
-  const programme = programmeSelect.value;
-  const schedule = ((classTimetableData[level] || {})[programme]) || [];
+  const level = levelSelect.value, programme = programmeSelect.value;
+  const schedule = (classTimetableData[level] || {})[programme] || [];
   selection.textContent = level + " • " + programme;
-  if (!Array.isArray(schedule) || schedule.length === 0) {
-    display.innerHTML = '<p class="timetable-empty">No timetable entries are available for this selection.</p>';
-    return;
-  }
-  let table = '<table class="timetable"><thead><tr><th>Time</th>' + weekdays.map(day => '<th>' + day + '</th>').join('') + '</tr></thead><tbody>';
+  if (!schedule.length) { display.innerHTML = '<p class="timetable-empty">No timetable entries available.</p>'; return; }
+  let table = '<table class="timetable"><thead><tr><th>Time</th>' + weekdays.map(day=>'<th>'+day+'</th>').join('') + '</tr></thead><tbody>';
   schedule.forEach(slot => {
-    table += '<tr><td>' + escapeTimetableText(slot && slot.time ? slot.time : '') + '</td>';
-    const cells = Array.isArray(slot && slot.cells) ? slot.cells : [];
-    weekdays.forEach((day, index) => {
-      const cell = cells[index];
+    table += '<tr><td>'+escapeTimetableText(slot.time)+'</td>';
+    slot.cells.forEach(cell => {
       if (!cell) { table += '<td class="free-cell">—</td>'; return; }
-      if (cell.activity) { table += '<td class="activity-cell">' + escapeTimetableText(cell.activity) + '</td>'; return; }
+      if (cell.activity) { table += '<td class="activity-cell">'+escapeTimetableText(cell.activity)+'</td>'; return; }
       const subject = cell.subject || '';
       if (subject === 'FREE') { table += '<td class="free-cell">FREE</td>'; return; }
-      table += '<td>';
-      if (subject) table += '<span class="lesson-code">' + escapeTimetableText(subject) + '</span>';
-      if (cell.subjectName && cell.subjectName !== subject) table += '<span class="lesson-name">' + escapeTimetableText(cell.subjectName) + '</span>';
-      if (cell.tutor) table += '<span class="lesson-detail"><b>Tutor:</b> ' + escapeTimetableText(cell.tutor) + '</span>';
-      if (cell.room) table += '<span class="lesson-detail"><b>Venue:</b> ' + escapeTimetableText(cell.room) + '</span>';
+      table += '<td><span class="lesson-code">'+escapeTimetableText(subject)+'</span>';
+      if (cell.subjectName && cell.subjectName !== subject) table += '<span class="lesson-name">'+escapeTimetableText(cell.subjectName)+'</span>';
+      if (cell.tutor) table += '<span class="lesson-detail"><b>Tutor:</b> '+escapeTimetableText(cell.tutor)+'</span>';
+      if (cell.room) table += '<span class="lesson-detail"><b>Venue:</b> '+escapeTimetableText(cell.room)+'</span>';
       table += '</td>';
     });
     table += '</tr>';
@@ -291,37 +318,30 @@ function renderTimetable() {
 function escapeTimetableText(value) {
   return String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 }
+levelSelect.addEventListener("change", updateProgrammes);
+programmeSelect.addEventListener("change", () => { display.innerHTML = '<p class="timetable-empty">Select View Timetable to load the schedule.</p>'; });
 const timetableModal = document.getElementById("timetable-modal");
+const timetableView = document.getElementById("timetable-view");
 function openTimetableModal() {
-  updateProgrammes();
   timetableModal.classList.add("is-open");
-  timetableModal.setAttribute("aria-hidden", "false");
+  timetableModal.setAttribute("aria-hidden","false");
   document.body.style.overflow = "hidden";
+  updateProgrammes();
 }
 function closeTimetableModal() {
   timetableModal.classList.remove("is-open");
-  timetableModal.setAttribute("aria-hidden", "true");
+  timetableModal.setAttribute("aria-hidden","true");
   document.body.style.overflow = "";
 }
-levelSelect.addEventListener("change", updateProgrammes);
-programmeSelect.addEventListener("change", () => {
-  display.innerHTML = '<p class="timetable-empty">Select View Timetable to load the schedule.</p>';
-  selection.textContent = "";
-});
-timetableView.addEventListener("click", event => {
-  event.preventDefault();
-  renderTimetable();
-});
-document.getElementById("timetable-close").addEventListener("click", event => {
-  event.preventDefault();
-  event.stopPropagation();
-  closeTimetableModal();
-});
+document.getElementById("timetable-close").addEventListener("click", closeTimetableModal);
 timetableModal.querySelector("[data-close-timetable]").addEventListener("click", closeTimetableModal);
-document.addEventListener("keydown", event => {
-  if (event.key === "Escape" && timetableModal.classList.contains("is-open")) closeTimetableModal();
+timetableView.addEventListener("click", () => {
+  renderTimetable();
+  display.scrollIntoView({behavior:"smooth",block:"nearest"});
 });
+document.addEventListener("keydown", event => { if(event.key === "Escape") closeTimetableModal(); });
 updateProgrammes();
+display.innerHTML = '<p class="timetable-empty">Choose a programme, then select View Timetable.</p>';
 
 </script>
 </body>
